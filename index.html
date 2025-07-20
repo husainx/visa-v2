@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visa Card</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+      :root {
+        --bg: #111316;
+        --logopng: url(assets/images/pattern_tile.png);
+        --airport: url(assets/images/airport.png);
+        --airport-mask: url(assets/images/airport_mask.png);
+        --c-gradient: url(assets/images/c-gradient.png);
+        --pattern-size: 35%;
+        --ar: 20/40;
+        --gutter: 8%;
+        --o: 0;
+        --p: 100%;
+        --h: 50%;
+        --r: 0;
+        --c-gradient-airport: 0% 0%;
+        --airport-y: 50%;
+        --airport-x: 100%;
+
+        --r-clr-1: hsl(0, 57%, 37%);
+        --r-clr-2: hsl(40, 53%, 39%);
+        --r-clr-3: hsl(90, 60%, 35%);
+        --r-clr-4: hsl(180, 60%, 35%);
+        --r-clr-5: hsl(180, 60%, 35%);
+        --r-clr-6: hsl(210, 57%, 39%);
+        --r-clr-7: hsl(280, 55%, 31%);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body,
+      html {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+      }
+
+      /* Shared text styles */
+      .text-white {
+        color: white;
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      .text-sm {
+        font-size: 0.75rem;
+      }
+
+      .text-base {
+        font-size: 1rem;
+      }
+
+      .text-lg {
+        font-size: 1.1rem;
+      }
+
+      .font-mono {
+        font-family: "Roboto Mono", monospace;
+      }
+
+      .font-medium {
+        font-weight: 500;
+      }
+
+      .font-semibold {
+        font-weight: 600;
+      }
+
+      .opacity-80 {
+        opacity: 0.8;
+      }
+
+      /* Shared layout styles */
+      .absolute {
+        position: absolute;
+      }
+
+      .relative {
+        position: relative;
+      }
+
+      .inset-0 {
+        inset: 0;
+      }
+
+      .flex {
+        display: flex;
+      }
+
+      .flex-col {
+        flex-direction: column;
+      }
+
+      .items-center {
+        align-items: center;
+      }
+
+      .justify-center {
+        justify-content: center;
+      }
+
+      /* Shared grid layout */
+      .grid-2col {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+        color: white;
+      }
+
+      .grid-1col {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 0.8rem;
+        color: white;
+      }
+
+      .grid-item p {
+        margin: 0;
+      }
+
+      /* Shared overlay base */
+      .overlay-base {
+        position: absolute;
+        inset: 0;
+        background-repeat: no-repeat;
+        mix-blend-mode: overlay;
+      }
+
+      /* Shared holo base */
+      .holo-base {
+        --space: 5%;
+        display: block;
+        position: absolute;
+        inset: 0;
+        border-radius: 15px;
+        background-size: 100vw 100vh;
+        background-repeat: no-repeat;
+        mask-composite: intersect;
+        filter: brightness(0.3) contrast(0.7) saturate(2);
+        opacity: var(--o);
+      }
+
+      h1 {
+        font-family: "Roboto Mono", monospace;
+        text-align: center;
+        z-index: 1;
+        color: white;
+      }
+
+      #app {
+        font-family: "Roboto Mono", monospace;
+        display: grid;
+        place-content: center;
+        overflow: hidden;
+        padding: 50px;
+        z-index: 999;
+        transform: translate3d(0, 0, 0.1px);
+      }
+
+      .visa-card {
+        display: grid;
+        grid-area: 1/1;
+        width: 400px;
+        aspect-ratio: var(--ar);
+        transform: translate3d(0, 0, 0.1px) scale(1) rotateY(var(--r));
+        transform-style: preserve-3d;
+        pointer-events: auto;
+        min-height: 800px;
+      }
+
+      .card {
+        grid-area: 1/1;
+        background-color: #081c3d;
+        background-image: radial-gradient(
+          circle at var(--p) 65%,
+          #05242e 2%,
+          #072149 20%,
+          transparent 40%
+        );
+        background-size: 100% 220vh;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 15px;
+        display: grid;
+        backface-visibility: visible;
+        transform: translateZ(1px);
+        transform-style: preserve-3d;
+        mask-size: cover;
+        overflow: hidden;
+        mask-repeat: no-repeat;
+        position: relative;
+      }
+
+      .pattern-overlay {
+        background-image: var(--logopng);
+        background-size: var(--pattern-size);
+        background-repeat: repeat;
+        background-position: 0%;
+        opacity: 0.5;
+        z-index: 2;
+      }
+
+      .airport-overlay {
+        background-image: var(--airport);
+        background-size: 100%;
+        background-position: 100% 100%;
+        z-index: 10;
+        opacity: 0.6;
+        filter: brightness(1.2), contrast(0.5);
+      }
+
+      .holo-airport {
+        background-image: linear-gradient(
+          -45deg,
+          var(--r-clr-1),
+          var(--r-clr-2),
+          var(--r-clr-3),
+          var(--r-clr-4),
+          var(--r-clr-5),
+          var(--r-clr-6),
+          var(--r-clr-7),
+          var(--r-clr-1),
+          var(--r-clr-2),
+          var(--r-clr-3),
+          var(--r-clr-4),
+          var(--r-clr-5),
+          var(--r-clr-6),
+          var(--r-clr-7),
+          var(--r-clr-1),
+          var(--r-clr-2),
+          var(--r-clr-3),
+          var(--r-clr-4),
+          var(--r-clr-5),
+          var(--r-clr-6),
+          var(--r-clr-7),
+          var(--r-clr-1)
+        );
+        background-position: var(--airport-x) var(--airport-y);
+        mask-image: var(--airport), var(--c-gradient);
+        mask-size: 100%, 220% 50%;
+        mask-repeat: no-repeat, no-repeat;
+        mask-position: 100% 100%, var(--c-gradient-airport);
+        mix-blend-mode: screen;
+      }
+
+      .holo {
+        background-image: linear-gradient(
+            -45deg,
+            var(--r-clr-1),
+            var(--r-clr-5)
+          ),
+          linear-gradient(
+            -65deg,
+            var(--r-clr-1),
+            var(--r-clr-2),
+            var(--r-clr-3),
+            var(--r-clr-4),
+            var(--r-clr-5),
+            var(--r-clr-6),
+            var(--r-clr-7),
+            var(--r-clr-1),
+            var(--r-clr-2),
+            var(--r-clr-3),
+            var(--r-clr-4),
+            var(--r-clr-5),
+            var(--r-clr-6),
+            var(--r-clr-7),
+            var(--r-clr-1),
+            var(--r-clr-2),
+            var(--r-clr-3),
+            var(--r-clr-4),
+            var(--r-clr-5),
+            var(--r-clr-6),
+            var(--r-clr-7),
+            var(--r-clr-1)
+          );
+        background-position: var(--h) var(--h);
+        background-blend-mode: luminosity, soft-light;
+        mask-image: var(--logopng), var(--c-gradient);
+        mask-size: var(--pattern-size), 220% 50%;
+        mask-repeat: repeat, no-repeat;
+        mask-position: 0%, var(--c-gradient-pos);
+        mix-blend-mode: plus-darker;
+        filter: brightness(0.9) contrast(0.7) saturate(2);
+      }
+
+      .logo {
+        width: 60%;
+        place-self: center;
+        position: absolute;
+        top: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        filter: brightness(0) invert(1);
+        z-index: 100;
+      }
+
+      #content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        padding: 4rem 1.5rem 1.5rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+
+      .photo-name-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        margin-top: 1rem;
+        width: 100%;
+      }
+
+      .photo-container {
+        margin-top: 20px;
+        width: 6rem;
+        height: 7.5rem;
+        background-color: white;
+        border-radius: 0.5rem;
+        border: 3px solid #d1fae5;
+        margin-bottom: 0.8rem;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      .photo-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .name {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: white;
+        text-align: center;
+        line-height: 1.3;
+        margin: 0;
+        padding: 0;
+        max-width: 100%;
+        word-wrap: break-word;
+        position: static;
+        top: auto;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        transform: none;
+      }
+
+      .personal-info {
+        margin-bottom: 1.2rem;
+      }
+
+      .visa-details {
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        padding-top: 1.2rem;
+      }
+
+      .visa-details .title {
+        font-size: 0.75rem;
+        opacity: 0.8;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 1rem;
+        color: white;
+      }
+
+      .visa-details .grid-2col {
+        margin-bottom: 1rem;
+      }
+
+      /* Text sizing for different sections */
+      .personal-info .value {
+        font-size: 1rem;
+      }
+
+      .visa-details .value {
+        font-size: 0.9rem;
+      }
+
+      .visa-details .details .value {
+        font-size: 0.8rem;
+      }
+
+      .qr-button {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 3rem;
+        height: 3rem;
+        background-color: rgba(255, 255, 255, 0.9);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+      }
+
+      .qr-button:hover {
+        background-color: rgba(255, 255, 255, 1);
+        border-color: rgba(255, 255, 255, 0.8);
+        transform: translateX(-50%) scale(1.1);
+        box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+      }
+
+      .qr-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        fill: #333;
+      }
+
+      /* Hide print QR code on screen */
+      .print-qr-code {
+        display: none;
+      }
+
+      /* Print styles - only QR code changes */
+      @media print {
+        /* Force background images to print */
+        * {
+          -webkit-print-color-adjust: exact !important;
+          color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+
+        /* Ensure all backgrounds print */
+        .card,
+        .holo-airport,
+        .holo,
+        .pattern-overlay,
+        .airport-overlay {
+          -webkit-print-color-adjust: exact !important;
+          color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+
+        .pattern-overlay {
+          filter: contrast(0.2) brightness(0.2);
+        }
+        .airport-overlay {
+          filter: contrast(1) brightness(1) opacity(0.5);
+        }
+
+        /* Disable masks for print - they don't work reliably */
+        .holo-airport,
+        .holo,
+        .pattern-overlay,
+        .airport-overlay {
+          -webkit-mask: none !important;
+          mask: none !important;
+          -webkit-mask-image: none !important;
+          mask-image: none !important;
+        }
+
+        /* Simple overlay effects for print */
+        .holo-airport {
+          background-image: linear-gradient(
+            -45deg,
+            var(--r-clr-1),
+            var(--r-clr-2),
+            var(--r-clr-3),
+            var(--r-clr-4),
+            var(--r-clr-5),
+            var(--r-clr-6),
+            var(--r-clr-7),
+            var(--r-clr-1),
+            var(--r-clr-2),
+            var(--r-clr-3),
+            var(--r-clr-4),
+            var(--r-clr-5),
+            var(--r-clr-6),
+            var(--r-clr-7),
+            var(--r-clr-1),
+            var(--r-clr-2),
+            var(--r-clr-3),
+            var(--r-clr-4),
+            var(--r-clr-5),
+            var(--r-clr-6),
+            var(--r-clr-7),
+            var(--r-clr-1)
+          ) !important;
+          background-size: 100vw 100vh !important;
+          background-position: var(--airport-x) var(--airport-y) !important;
+          background-repeat: no-repeat !important;
+          opacity: 0.3 !important;
+        }
+
+        .holo {
+          background-image: linear-gradient(
+              -45deg,
+              var(--r-clr-1),
+              var(--r-clr-5)
+            ),
+            linear-gradient(
+              -65deg,
+              var(--r-clr-1),
+              var(--r-clr-2),
+              var(--r-clr-3),
+              var(--r-clr-4),
+              var(--r-clr-5),
+              var(--r-clr-6),
+              var(--r-clr-7),
+              var(--r-clr-1),
+              var(--r-clr-2),
+              var(--r-clr-3),
+              var(--r-clr-4),
+              var(--r-clr-5),
+              var(--r-clr-6),
+              var(--r-clr-7),
+              var(--r-clr-1),
+              var(--r-clr-2),
+              var(--r-clr-3),
+              var(--r-clr-4),
+              var(--r-clr-5),
+              var(--r-clr-6),
+              var(--r-clr-7),
+              var(--r-clr-1)
+            ) !important;
+          background-size: 100vw 100vh !important;
+          background-position: var(--h) var(--h) !important;
+          background-repeat: no-repeat !important;
+          background-blend-mode: luminosity, soft-light !important;
+          opacity: 0.4 !important;
+        }
+
+        .pattern-overlay {
+          background-image: var(--logopng) !important;
+          background-size: var(--pattern-size) !important;
+          background-repeat: repeat !important;
+          background-position: 0% !important;
+          opacity: 0.3 !important;
+        }
+
+        /* Fix masks for print compatibility */
+
+        .holo {
+          -webkit-mask-image: var(--logopng), var(--c-gradient) !important;
+          mask-image: var(--logopng), var(--c-gradient) !important;
+          -webkit-mask-size: var(--pattern-size), 220% 50% !important;
+          mask-size: var(--pattern-size), 220% 50% !important;
+          -webkit-mask-repeat: repeat, no-repeat !important;
+          mask-repeat: repeat, no-repeat !important;
+          -webkit-mask-position: 0%, var(--c-gradient-pos) !important;
+          mask-position: 0%, var(--c-gradient-pos) !important;
+          -webkit-mask-composite: intersect !important;
+          mask-composite: intersect !important;
+          /* Fallback for browsers that don't support mask-composite */
+          -webkit-mask-composite: source-in !important;
+        }
+
+        /* Ensure mask images are loaded by forcing them in root */
+        html {
+          --airport-print: url(assets/images/airport.png) !important;
+          --c-gradient-print: url(assets/images/c-gradient.png) !important;
+          --logopng-print: url(assets/images/pattern_tile.png) !important;
+        }
+
+        /* Alternative mask approach for better print support */
+        /* .holo-airport {
+          -webkit-mask: var(--airport-print), var(--c-gradient-print) !important;
+          mask: var(--airport-print), var(--c-gradient-print) !important;
+          -webkit-mask-size: 100%, 220% 50% !important;
+          mask-size: 100%, 220% 50% !important;
+          background-repeat: no-repeat !important;
+          -webkit-mask-repeat: no-repeat !important;
+          mask-repeat: no-repeat !important;
+        } */
+
+        .holo {
+          -webkit-mask: var(--logopng-print), var(--c-gradient-print) !important;
+          mask: var(--logopng-print), var(--c-gradient-print) !important;
+          -webkit-mask-size: 35%, 220% 50% !important;
+          mask-size: 35%, 220% 50% !important;
+        }
+
+        /* Hide QR button when printing */
+        .qr-button {
+          display: none !important;
+        }
+
+        /* Show QR code when printing */
+        .print-qr-code {
+          display: block !important;
+          position: absolute;
+          bottom: 1rem;
+          right: 1rem;
+          text-align: center;
+          background: white;
+          padding: 0.5rem;
+          border-radius: 0.5rem;
+          border: 1px solid rgba(0, 0, 0, 0.2);
+          z-index: 10;
+        }
+
+        .print-qr-code img {
+          width: 80px;
+          height: 80px;
+          display: block;
+          margin: 0 auto;
+        }
+
+        .print-qr-code p {
+          margin: 0.25rem 0 0 0;
+          font-size: 0.6rem;
+          color: #666;
+        }
+
+        /* Adjust content padding to accommodate QR code */
+        #content {
+          padding-bottom: 6rem;
+        }
+
+        /* Hide modal when printing */
+        .modal {
+          display: none !important;
+        }
+      }
+
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+      }
+
+      .modal.active {
+        display: flex;
+      }
+
+      .modal-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        max-width: 90%;
+        max-height: 90%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .close-button {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #666;
+        width: 2rem;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+      }
+
+      .close-button:hover {
+        background-color: #f0f0f0;
+        color: #333;
+      }
+
+      .qr-code-container {
+        margin: 1rem 0;
+      }
+
+      .qr-code-container img {
+        max-width: 300px;
+        max-height: 300px;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .qr-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.5rem;
+        text-align: center;
+      }
+
+      .qr-description {
+        font-size: 1rem;
+        color: #666;
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+
+      @media screen and (min-width: 1280px) {
+        .visa-card {
+          transform: scale(0.95);
+        }
+      }
+
+      @media screen and (max-width: 400px) {
+        .visa-card {
+          transform: scale(0.75);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main id="app">
+      <section class="visa-card">
+        <section class="card">
+          <div class="holo-airport holo-base"></div>
+          <div class="airport-overlay overlay-base"></div>
+          <div class="holo holo-base"></div>
+          <div class="pattern-overlay overlay-base"></div>
+          <img class="logo" src="assets/svgs/logo.svg" alt="VISA logo" />
+
+          <div id="content">
+            <div class="photo-name-section">
+              <div class="photo-container">
+                <img
+                  src="https://i.pravatar.cc/150?u=uniqueUserId12"
+                  alt="Profile Photo"
+                />
+              </div>
+              <h1 class="name">Muthuswami Venugopal Iyer</h1>
+            </div>
+
+            <div class="personal-info grid-2col">
+              <div class="grid-item">
+                <p class="label text-sm opacity-80">Gender</p>
+                <p class="value font-semibold">Male</p>
+              </div>
+              <div class="grid-item">
+                <p class="label text-sm opacity-80">Nationality</p>
+                <p class="value font-semibold">Indian</p>
+              </div>
+              <div class="grid-item">
+                <p class="label text-sm opacity-80">Date of Birth</p>
+                <p class="value font-semibold">17/03/2002</p>
+              </div>
+              <div class="grid-item">
+                <p class="label text-sm opacity-80">Passport No.</p>
+                <p class="value font-semibold">V1251024</p>
+              </div>
+            </div>
+
+            <div class="visa-details">
+              <div class="title">Visa Details</div>
+              <div class="grid-2col">
+                <div class="grid-item">
+                  <p class="label text-sm opacity-80">Visa Type</p>
+                  <p class="value font-semibold">Work Visa</p>
+                </div>
+                <div class="grid-item">
+                  <p class="label text-sm opacity-80">Visa No</p>
+                  <p class="value font-semibold">55673/2024</p>
+                </div>
+                <div class="grid-item">
+                  <p class="label text-sm opacity-80">Valid from</p>
+                  <p class="value font-semibold">15/12/2024</p>
+                </div>
+                <div class="grid-item">
+                  <p class="label text-sm opacity-80">Valid Until</p>
+                  <p class="value font-semibold">15/12/2026</p>
+                </div>
+                <div class="grid-item">
+                  <p class="label text-sm opacity-80">No. of Entries</p>
+                  <p class="value font-semibold">Multiple</p>
+                </div>
+              </div>
+              <div class="details grid-1col">
+                <div class="grid-item">
+                  <p class="label text-sm opacity-80">Details</p>
+                  <p class="value font-semibold">Abdulla Wisham(A12376)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="qr-button" onclick="openQRModal()">
+            <svg
+              class="qr-icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3 11V3H11V11H3ZM5 9H9V5H5V9ZM3 21V13H11V21H3ZM5 19H9V15H5V19ZM13 3V11H21V3H13ZM19 9H15V5H19V9ZM19 21V19H21V21H19ZM19 17V15H21V17H19ZM17 19V21H15V19H17ZM13 13V15H15V13H13ZM13 17V19H15V17H13ZM13 21V19H15V21H13ZM17 13V15H19V13H17Z"
+              />
+            </svg>
+          </button>
+
+          <!-- QR Code for printing only -->
+          <div class="print-qr-code">
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://www.immigration.gov.mv/"
+              alt="QR Code for Visa Verification"
+            />
+            <p>WP1251024</p>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <div id="qrModal" class="modal" onclick="closeQRModal(event)">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="close-button" onclick="closeQRModal()">&times;</button>
+        <h2 class="qr-title">Visa Verification QR Code</h2>
+        <p class="qr-description">
+          Scan this QR code to verify the authenticity of this visa document
+        </p>
+        <div class="qr-code-container">
+          <img
+            src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://www.immigration.gov.mv/"
+            alt="QR Code for Visa Verification"
+          />
+        </div>
+        <p class="qr-description">Work permit no: WP1251024</p>
+      </div>
+    </div>
+
+    <script>
+      function openQRModal() {
+        const modal = document.getElementById("qrModal");
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeQRModal(event) {
+        if (
+          !event ||
+          event.target === event.currentTarget ||
+          event.target.classList.contains("close-button")
+        ) {
+          const modal = document.getElementById("qrModal");
+          modal.classList.remove("active");
+          document.body.style.overflow = "auto";
+        }
+      }
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          closeQRModal();
+        }
+      });
+
+      const holoLoop = gsap.timeline({ repeat: -1, repeatDelay: 0 });
+      holoLoop
+        .to("#app", {
+          "--h": "85%",
+          "--o": 0.9,
+          duration: 4.5,
+          ease: "power1.inOut",
+        })
+        .to("#app", {
+          "--h": "25%",
+          "--o": 1,
+          duration: 6.2,
+          ease: "back.inOut(1.2)",
+        })
+        .to("#app", {
+          "--h": "95%",
+          "--o": 0.7,
+          duration: 3.6,
+          ease: "elastic.inOut(1, 0.5)",
+        })
+        .to("#app", {
+          "--h": "45%",
+          "--o": 1,
+          duration: 5.4,
+          ease: "power2.inOut",
+        })
+        .to("#app", {
+          "--h": "75%",
+          "--o": 0.8,
+          duration: 4.4,
+          ease: "sine.inOut",
+        })
+        .to("#app", {
+          "--h": "15%",
+          "--o": 1,
+          duration: 6.8,
+          ease: "power3.inOut",
+        });
+
+      const cGradientLoop = gsap.timeline({ repeat: -1, repeatDelay: 0 });
+      cGradientLoop
+        .fromTo(
+          "#app",
+          {
+            "--c-gradient-pos": "15% -140%",
+          },
+          {
+            "--c-gradient-pos": "75% 180%",
+            duration: 16,
+            ease: "power2.inOut",
+          }
+        )
+        .to("#app", {
+          "--c-gradient-pos": "25% -160%",
+          duration: 12,
+          ease: "back.inOut(1.3)",
+        })
+        .to("#app", {
+          "--c-gradient-pos": "95% 220%",
+          duration: 18,
+          ease: "elastic.inOut(1, 0.3)",
+        })
+        .to("#app", {
+          "--c-gradient-pos": "5% -120%",
+          duration: 14,
+          ease: "power3.inOut",
+        });
+
+      const holoAirportLoop = gsap.timeline({ repeat: -1, repeatDelay: 0 });
+      holoAirportLoop
+        .fromTo(
+          "#app",
+          {
+            "--c-gradient-airport": "35% -180%",
+          },
+          {
+            "--c-gradient-airport": "85% 170%",
+            duration: 9,
+            ease: "power2.inOut",
+          }
+        )
+        .to("#app", {
+          "--c-gradient-airport": "15% -140%",
+          duration: 7.6,
+          ease: "back.inOut(1.5)",
+        })
+        .to("#app", {
+          "--c-gradient-airport": "105% 200%",
+          duration: 10.4,
+          ease: "elastic.inOut(1, 0.4)",
+        })
+        .to("#app", {
+          "--c-gradient-airport": "45% -160%",
+          duration: 8.2,
+          ease: "sine.inOut",
+        })
+        .to("#app", {
+          "--c-gradient-airport": "75% 240%",
+          duration: 7.2,
+          ease: "power3.inOut",
+        });
+
+      const holoAirport = gsap.timeline({ repeat: -1, repeatDelay: 0 });
+      holoAirport
+        .to("#app", {
+          "--airport-y": "12%",
+          "--airport-x": "88%",
+          "--o": 0.9,
+          duration: 4.2,
+          ease: "power2.inOut",
+        })
+        .to("#app", {
+          "--airport-y": "97%",
+          "--airport-x": "23%",
+          "--o": 1,
+          duration: 6.6,
+          ease: "back.inOut(1.4)",
+        })
+        .to("#app", {
+          "--airport-y": "35%",
+          "--airport-x": "115%",
+          "--o": 0.8,
+          duration: 5.6,
+          ease: "elastic.inOut(1, 0.6)",
+        })
+        .to("#app", {
+          "--airport-y": "78%",
+          "--airport-x": "8%",
+          "--o": 1,
+          duration: 4.8,
+          ease: "power1.inOut",
+        })
+        .to("#app", {
+          "--airport-y": "51%",
+          "--airport-x": "92%",
+          "--o": 0.7,
+          duration: 7.4,
+          ease: "sine.inOut",
+        })
+        .to("#app", {
+          "--airport-y": "19%",
+          "--airport-x": "67%",
+          "--o": 1,
+          duration: 5.2,
+          ease: "power3.inOut",
+        })
+        .to("#app", {
+          "--airport-y": "84%",
+          "--airport-x": "41%",
+          "--o": 0.9,
+          duration: 6.2,
+          ease: "back.inOut(1.1)",
+        })
+        .to("#app", {
+          "--airport-y": "29%",
+          "--airport-x": "76%",
+          "--o": 0.8,
+          duration: 5.8,
+          ease: "elastic.inOut(1, 0.2)",
+        });
+    </script>
+  </body>
+</html>
