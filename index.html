@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no"
+    />
     <title>Visa Card</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600&display=swap"
@@ -17,23 +20,23 @@
         --airport-mask: url(assets/images/airport_mask.png);
         --c-gradient: url(assets/images/c-gradient.png);
         --pattern-size: 35%;
-        --ar: 20/40;
+        --ar: 0.5;
         --gutter: 8%;
         --o: 0;
         --p: 100%;
         --h: 50%;
-        --r: 0;
+        --r: 0deg;
         --c-gradient-airport: 0% 0%;
         --airport-y: 50%;
         --airport-x: 100%;
 
-        --r-clr-1: hsl(0, 57%, 37%);
-        --r-clr-2: hsl(40, 53%, 39%);
-        --r-clr-3: hsl(90, 60%, 35%);
-        --r-clr-4: hsl(180, 60%, 35%);
-        --r-clr-5: hsl(180, 60%, 35%);
-        --r-clr-6: hsl(210, 57%, 39%);
-        --r-clr-7: hsl(280, 55%, 31%);
+        --r-clr-1: #973a37;
+        --r-clr-2: #a67739;
+        --r-clr-3: #659c35;
+        --r-clr-4: #359c9c;
+        --r-clr-5: #359c9c;
+        --r-clr-6: #39609c;
+        --r-clr-7: #7f3973;
       }
 
       * {
@@ -42,8 +45,15 @@
         box-sizing: border-box;
       }
 
-      body,
       html {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        height: 100%;
+        overflow-x: hidden;
+      }
+
+      body {
         display: -webkit-box;
         display: -webkit-flex;
         display: -moz-box;
@@ -60,10 +70,14 @@
         -ms-flex-align: center;
         align-items: center;
         width: 100%;
-        height: 100%;
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
         margin: 0;
         padding: 0;
+        background: #111316;
         background: var(--bg);
+        -webkit-overflow-scrolling: touch;
+        position: relative;
       }
 
       /* Shared text styles */
@@ -187,6 +201,15 @@
         mix-blend-mode: overlay;
       }
 
+      /* Bottom-aligned overlay base */
+      .overlay-base-bottom {
+        position: absolute;
+        right: 0;
+        left: 0;
+        background-repeat: no-repeat;
+        mix-blend-mode: overlay;
+      }
+
       /* Shared holo base */
       .holo-base {
         --space: 5%;
@@ -201,11 +224,15 @@
         border-radius: 15px;
         background-size: 100vw 100vh;
         background-repeat: no-repeat;
-        -webkit-mask-composite: intersect;
+        -webkit-mask-composite: source-in;
         mask-composite: intersect;
         -webkit-filter: brightness(0.3) contrast(0.7) saturate(2);
         filter: brightness(0.3) contrast(0.7) saturate(2);
+        opacity: 0;
         opacity: var(--o);
+        will-change: opacity, transform;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
       }
 
       h1 {
@@ -227,6 +254,9 @@
         -moz-transform: translate3d(0, 0, 0.1px);
         -ms-transform: translate3d(0, 0, 0.1px);
         transform: translate3d(0, 0, 0.1px);
+        will-change: transform;
+        -webkit-perspective: 1000px;
+        perspective: 1000px;
       }
 
       .visa-card {
@@ -236,16 +266,19 @@
         -ms-grid-column: 1;
         grid-area: 1/1;
         width: 400px;
-        aspect-ratio: var(--ar);
-        -webkit-transform: translate3d(0, 0, 0.1px) scale(1) rotateY(var(--r));
-        -moz-transform: translate3d(0, 0, 0.1px) scale(1) rotateY(var(--r));
-        -ms-transform: translate3d(0, 0, 0.1px) scale(1) rotateY(var(--r));
+        height: 800px;
+        aspect-ratio: 0.5;
+        -webkit-transform: translate3d(0, 0, 0.1px) scale(1) rotateY(0deg);
+        -moz-transform: translate3d(0, 0, 0.1px) scale(1) rotateY(0deg);
+        -ms-transform: translate3d(0, 0, 0.1px) scale(1) rotateY(0deg);
         transform: translate3d(0, 0, 0.1px) scale(1) rotateY(var(--r));
         -webkit-transform-style: preserve-3d;
         -moz-transform-style: preserve-3d;
         transform-style: preserve-3d;
         pointer-events: auto;
-        min-height: 800px;
+        will-change: transform;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
       }
 
       .card {
@@ -254,13 +287,13 @@
         grid-area: 1/1;
         background-color: #081c3d;
         background-image: -webkit-radial-gradient(
-          circle at var(--p) 65%,
+          circle at 100% 65%,
           #05242e 2%,
           #072149 20%,
           transparent 40%
         );
         background-image: -moz-radial-gradient(
-          circle at var(--p) 65%,
+          circle at 100% 65%,
           #05242e 2%,
           #072149 20%,
           transparent 40%
@@ -279,9 +312,9 @@
         border-radius: 15px;
         display: -ms-grid;
         display: grid;
-        -webkit-backface-visibility: visible;
-        -moz-backface-visibility: visible;
-        backface-visibility: visible;
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        backface-visibility: hidden;
         -webkit-transform: translateZ(1px);
         -moz-transform: translateZ(1px);
         -ms-transform: translateZ(1px);
@@ -289,16 +322,14 @@
         -webkit-transform-style: preserve-3d;
         -moz-transform-style: preserve-3d;
         transform-style: preserve-3d;
-        -webkit-mask-size: cover;
-        mask-size: cover;
         overflow: hidden;
-        -webkit-mask-repeat: no-repeat;
-        mask-repeat: no-repeat;
         position: relative;
+        will-change: transform;
       }
 
       .pattern-overlay {
         background-image: var(--logopng);
+        background-size: 35%;
         background-size: var(--pattern-size);
         background-repeat: repeat;
         background-position: 0%;
@@ -317,55 +348,58 @@
       }
 
       .holo-airport {
+        height: 200px;
+        position: absolute;
+        bottom: 0;
         background-image: -webkit-linear-gradient(
           -45deg,
-          var(--r-clr-1),
-          var(--r-clr-2),
-          var(--r-clr-3),
-          var(--r-clr-4),
-          var(--r-clr-5),
-          var(--r-clr-6),
-          var(--r-clr-7),
-          var(--r-clr-1),
-          var(--r-clr-2),
-          var(--r-clr-3),
-          var(--r-clr-4),
-          var(--r-clr-5),
-          var(--r-clr-6),
-          var(--r-clr-7),
-          var(--r-clr-1),
-          var(--r-clr-2),
-          var(--r-clr-3),
-          var(--r-clr-4),
-          var(--r-clr-5),
-          var(--r-clr-6),
-          var(--r-clr-7),
-          var(--r-clr-1)
+          #973a37,
+          #a67739,
+          #659c35,
+          #359c9c,
+          #359c9c,
+          #39609c,
+          #7f3973,
+          #973a37,
+          #a67739,
+          #659c35,
+          #359c9c,
+          #359c9c,
+          #39609c,
+          #7f3973,
+          #973a37,
+          #a67739,
+          #659c35,
+          #359c9c,
+          #359c9c,
+          #39609c,
+          #7f3973,
+          #973a37
         );
         background-image: -moz-linear-gradient(
           -45deg,
-          var(--r-clr-1),
-          var(--r-clr-2),
-          var(--r-clr-3),
-          var(--r-clr-4),
-          var(--r-clr-5),
-          var(--r-clr-6),
-          var(--r-clr-7),
-          var(--r-clr-1),
-          var(--r-clr-2),
-          var(--r-clr-3),
-          var(--r-clr-4),
-          var(--r-clr-5),
-          var(--r-clr-6),
-          var(--r-clr-7),
-          var(--r-clr-1),
-          var(--r-clr-2),
-          var(--r-clr-3),
-          var(--r-clr-4),
-          var(--r-clr-5),
-          var(--r-clr-6),
-          var(--r-clr-7),
-          var(--r-clr-1)
+          #973a37,
+          #a67739,
+          #659c35,
+          #359c9c,
+          #359c9c,
+          #39609c,
+          #7f3973,
+          #973a37,
+          #a67739,
+          #659c35,
+          #359c9c,
+          #359c9c,
+          #39609c,
+          #7f3973,
+          #973a37,
+          #a67739,
+          #659c35,
+          #359c9c,
+          #359c9c,
+          #39609c,
+          #7f3973,
+          #973a37
         );
         background-image: linear-gradient(
           -45deg,
@@ -392,31 +426,30 @@
           var(--r-clr-7),
           var(--r-clr-1)
         );
+        background-blend-mode: luminosity, soft-light;
+
+        /* background-position: 100% 50%; */
         background-position: var(--airport-x) var(--airport-y);
-        -webkit-mask-image: var(--airport), var(--c-gradient);
+        /* -webkit-mask-image: var(--airport), var(--c-gradient); */
         mask-image: var(--airport), var(--c-gradient);
-        -webkit-mask-size: 100%, 220% 50%;
-        mask-size: 100%, 220% 50%;
+        -webkit-mask-size: 444px, 300% 200%;
+        mask-size: 100%, 220% 300%;
         -webkit-mask-repeat: no-repeat, no-repeat;
         mask-repeat: no-repeat, no-repeat;
         -webkit-mask-position: 100% 100%, var(--c-gradient-airport);
         mask-position: 100% 100%, var(--c-gradient-airport);
-        mix-blend-mode: screen;
+        -webkit-mask-composite: clear;
+        mask-composite: intersect;
+        mix-blend-mode: color-dodge;
+        z-index: 31;
+        overflow: hidden;
       }
 
       .holo {
-        background-image: -webkit-linear-gradient(
-            -45deg,
-            var(--r-clr-1),
-            var(--r-clr-5)
-          ),
-          -webkit-linear-gradient(-65deg, var(--r-clr-1), var(--r-clr-2), var(--r-clr-3), var(--r-clr-4), var(--r-clr-5), var(--r-clr-6), var(--r-clr-7), var(--r-clr-1), var(--r-clr-2), var(--r-clr-3), var(--r-clr-4), var(--r-clr-5), var(--r-clr-6), var(--r-clr-7), var(--r-clr-1), var(--r-clr-2), var(--r-clr-3), var(--r-clr-4), var(--r-clr-5), var(--r-clr-6), var(--r-clr-7), var(--r-clr-1));
-        background-image: -moz-linear-gradient(
-            -45deg,
-            var(--r-clr-1),
-            var(--r-clr-5)
-          ),
-          -moz-linear-gradient(-65deg, var(--r-clr-1), var(--r-clr-2), var(--r-clr-3), var(--r-clr-4), var(--r-clr-5), var(--r-clr-6), var(--r-clr-7), var(--r-clr-1), var(--r-clr-2), var(--r-clr-3), var(--r-clr-4), var(--r-clr-5), var(--r-clr-6), var(--r-clr-7), var(--r-clr-1), var(--r-clr-2), var(--r-clr-3), var(--r-clr-4), var(--r-clr-5), var(--r-clr-6), var(--r-clr-7), var(--r-clr-1));
+        background-image: -webkit-linear-gradient(-45deg, #973a37, #359c9c),
+          -webkit-linear-gradient(-65deg, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37);
+        background-image: -moz-linear-gradient(-45deg, #973a37, #359c9c),
+          -moz-linear-gradient(-65deg, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37);
         background-image: linear-gradient(
             -45deg,
             var(--r-clr-1),
@@ -447,19 +480,23 @@
             var(--r-clr-7),
             var(--r-clr-1)
           );
+        /* background-position: 50% 50%; */
         background-position: var(--h) var(--h);
         background-blend-mode: luminosity, soft-light;
         -webkit-mask-image: var(--logopng), var(--c-gradient);
         mask-image: var(--logopng), var(--c-gradient);
-        -webkit-mask-size: var(--pattern-size), 220% 50%;
+        -webkit-mask-size: 35%, 220% 50%;
         mask-size: var(--pattern-size), 220% 50%;
         -webkit-mask-repeat: repeat, no-repeat;
         mask-repeat: repeat, no-repeat;
-        -webkit-mask-position: 0%, var(--c-gradient-pos);
+        -webkit-mask-position: 0%, 15% -140%;
         mask-position: 0%, var(--c-gradient-pos);
-        mix-blend-mode: plus-darker;
+        -webkit-mask-composite: source-in;
+        mask-composite: intersect;
+        mix-blend-mode: screen;
         -webkit-filter: brightness(0.9) contrast(0.7) saturate(2);
         filter: brightness(0.9) contrast(0.7) saturate(2);
+        z-index: 30;
       }
 
       .logo {
@@ -642,6 +679,12 @@
         z-index: 100;
         -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
       }
 
       .qr-button:hover {
@@ -654,6 +697,13 @@
         -webkit-box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
         -moz-box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
         box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+      }
+
+      .qr-button:active {
+        -webkit-transform: translateX(-50%) scale(0.95);
+        -moz-transform: translateX(-50%) scale(0.95);
+        -ms-transform: translateX(-50%) scale(0.95);
+        transform: translateX(-50%) scale(0.95);
       }
 
       .qr-icon {
@@ -711,130 +761,118 @@
         .holo-airport {
           background-image: -webkit-linear-gradient(
             -45deg,
-            var(--r-clr-1),
-            var(--r-clr-2),
-            var(--r-clr-3),
-            var(--r-clr-4),
-            var(--r-clr-5),
-            var(--r-clr-6),
-            var(--r-clr-7),
-            var(--r-clr-1),
-            var(--r-clr-2),
-            var(--r-clr-3),
-            var(--r-clr-4),
-            var(--r-clr-5),
-            var(--r-clr-6),
-            var(--r-clr-7),
-            var(--r-clr-1),
-            var(--r-clr-2),
-            var(--r-clr-3),
-            var(--r-clr-4),
-            var(--r-clr-5),
-            var(--r-clr-6),
-            var(--r-clr-7),
-            var(--r-clr-1)
+            #973a37,
+            #a67739,
+            #659c35,
+            #359c9c,
+            #359c9c,
+            #39609c,
+            #7f3973,
+            #973a37,
+            #a67739,
+            #659c35,
+            #359c9c,
+            #359c9c,
+            #39609c,
+            #7f3973,
+            #973a37,
+            #a67739,
+            #659c35,
+            #359c9c,
+            #359c9c,
+            #39609c,
+            #7f3973,
+            #973a37
           ) !important;
           background-image: -moz-linear-gradient(
             -45deg,
-            var(--r-clr-1),
-            var(--r-clr-2),
-            var(--r-clr-3),
-            var(--r-clr-4),
-            var(--r-clr-5),
-            var(--r-clr-6),
-            var(--r-clr-7),
-            var(--r-clr-1),
-            var(--r-clr-2),
-            var(--r-clr-3),
-            var(--r-clr-4),
-            var(--r-clr-5),
-            var(--r-clr-6),
-            var(--r-clr-7),
-            var(--r-clr-1),
-            var(--r-clr-2),
-            var(--r-clr-3),
-            var(--r-clr-4),
-            var(--r-clr-5),
-            var(--r-clr-6),
-            var(--r-clr-7),
-            var(--r-clr-1)
+            #973a37,
+            #a67739,
+            #659c35,
+            #359c9c,
+            #359c9c,
+            #39609c,
+            #7f3973,
+            #973a37,
+            #a67739,
+            #659c35,
+            #359c9c,
+            #359c9c,
+            #39609c,
+            #7f3973,
+            #973a37,
+            #a67739,
+            #659c35,
+            #359c9c,
+            #359c9c,
+            #39609c,
+            #7f3973,
+            #973a37
           ) !important;
           background-image: linear-gradient(
             -45deg,
-            var(--r-clr-1),
-            var(--r-clr-2),
-            var(--r-clr-3),
-            var(--r-clr-4),
-            var(--r-clr-5),
-            var(--r-clr-6),
-            var(--r-clr-7),
-            var(--r-clr-1),
-            var(--r-clr-2),
-            var(--r-clr-3),
-            var(--r-clr-4),
-            var(--r-clr-5),
-            var(--r-clr-6),
-            var(--r-clr-7),
-            var(--r-clr-1),
-            var(--r-clr-2),
-            var(--r-clr-3),
-            var(--r-clr-4),
-            var(--r-clr-5),
-            var(--r-clr-6),
-            var(--r-clr-7),
-            var(--r-clr-1)
+            #973a37,
+            #a67739,
+            #659c35,
+            #359c9c,
+            #359c9c,
+            #39609c,
+            #7f3973,
+            #973a37,
+            #a67739,
+            #659c35,
+            #359c9c,
+            #359c9c,
+            #39609c,
+            #7f3973,
+            #973a37,
+            #a67739,
+            #659c35,
+            #359c9c,
+            #359c9c,
+            #39609c,
+            #7f3973,
+            #973a37
           ) !important;
           background-size: 100vw 100vh !important;
-          background-position: var(--airport-x) var(--airport-y) !important;
+          background-position: 100% 50% !important;
           background-repeat: no-repeat !important;
           opacity: 0.3 !important;
         }
 
         .holo {
-          background-image: -webkit-linear-gradient(
-              -45deg,
-              var(--r-clr-1),
-              var(--r-clr-5)
-            ),
-            -webkit-linear-gradient(-65deg, var(--r-clr-1), var(--r-clr-2), var(--r-clr-3), var(--r-clr-4), var(--r-clr-5), var(--r-clr-6), var(--r-clr-7), var(--r-clr-1), var(--r-clr-2), var(--r-clr-3), var(--r-clr-4), var(--r-clr-5), var(--r-clr-6), var(--r-clr-7), var(--r-clr-1), var(--r-clr-2), var(--r-clr-3), var(--r-clr-4), var(--r-clr-5), var(--r-clr-6), var(--r-clr-7), var(--r-clr-1)) !important;
-          background-image: -moz-linear-gradient(
-              -45deg,
-              var(--r-clr-1),
-              var(--r-clr-5)
-            ),
-            -moz-linear-gradient(-65deg, var(--r-clr-1), var(--r-clr-2), var(--r-clr-3), var(--r-clr-4), var(--r-clr-5), var(--r-clr-6), var(--r-clr-7), var(--r-clr-1), var(--r-clr-2), var(--r-clr-3), var(--r-clr-4), var(--r-clr-5), var(--r-clr-6), var(--r-clr-7), var(--r-clr-1), var(--r-clr-2), var(--r-clr-3), var(--r-clr-4), var(--r-clr-5), var(--r-clr-6), var(--r-clr-7), var(--r-clr-1)) !important;
-          background-image: linear-gradient(
-              -45deg,
-              var(--r-clr-1),
-              var(--r-clr-5)
-            ),
+          background-image: -webkit-linear-gradient(-45deg, #973a37, #359c9c),
+            -webkit-linear-gradient(-65deg, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37) !important;
+          background-image: -moz-linear-gradient(-45deg, #973a37, #359c9c),
+            -moz-linear-gradient(-65deg, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37) !important;
+          background-image: linear-gradient(-45deg, #973a37, #359c9c),
             linear-gradient(
               -65deg,
-              var(--r-clr-1),
-              var(--r-clr-2),
-              var(--r-clr-3),
-              var(--r-clr-4),
-              var(--r-clr-5),
-              var(--r-clr-6),
-              var(--r-clr-7),
-              var(--r-clr-1),
-              var(--r-clr-2),
-              var(--r-clr-3),
-              var(--r-clr-4),
-              var(--r-clr-5),
-              var(--r-clr-6),
-              var(--r-clr-7),
-              var(--r-clr-1),
-              var(--r-clr-2),
-              var(--r-clr-3),
-              var(--r-clr-4),
-              var(--r-clr-5),
-              var(--r-clr-6),
-              var(--r-clr-7),
-              var(--r-clr-1)
+              #973a37,
+              #a67739,
+              #659c35,
+              #359c9c,
+              #359c9c,
+              #39609c,
+              #7f3973,
+              #973a37,
+              #a67739,
+              #659c35,
+              #359c9c,
+              #359c9c,
+              #39609c,
+              #7f3973,
+              #973a37,
+              #a67739,
+              #659c35,
+              #359c9c,
+              #359c9c,
+              #39609c,
+              #7f3973,
+              #973a37
             ) !important;
           background-size: 100vw 100vh !important;
-          background-position: var(--h) var(--h) !important;
+          background-position: 50% 50% !important;
           background-repeat: no-repeat !important;
           background-blend-mode: luminosity, soft-light !important;
           opacity: 0.4 !important;
@@ -842,7 +880,7 @@
 
         .pattern-overlay {
           background-image: var(--logopng) !important;
-          background-size: var(--pattern-size) !important;
+          background-size: 35% !important;
           background-repeat: repeat !important;
           background-position: 0% !important;
           opacity: 0.3 !important;
@@ -853,13 +891,13 @@
         .holo {
           -webkit-mask-image: var(--logopng), var(--c-gradient) !important;
           mask-image: var(--logopng), var(--c-gradient) !important;
-          -webkit-mask-size: var(--pattern-size), 220% 50% !important;
-          mask-size: var(--pattern-size), 220% 50% !important;
+          -webkit-mask-size: 35%, 220% 50% !important;
+          mask-size: 35%, 220% 50% !important;
           -webkit-mask-repeat: repeat, no-repeat !important;
           mask-repeat: repeat, no-repeat !important;
-          -webkit-mask-position: 0%, var(--c-gradient-pos) !important;
-          mask-position: 0%, var(--c-gradient-pos) !important;
-          -webkit-mask-composite: intersect !important;
+          -webkit-mask-position: 0%, 15% -140% !important;
+          mask-position: 0%, 15% -140% !important;
+          -webkit-mask-composite: source-in !important;
           mask-composite: intersect !important;
           /* Fallback for browsers that don't support mask-composite */
           -webkit-mask-composite: source-in !important;
@@ -956,6 +994,7 @@
         z-index: 1000;
         -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
+        -webkit-overflow-scrolling: touch;
       }
 
       .modal.active {
@@ -1030,6 +1069,7 @@
         -moz-transition: all 0.3s ease;
         -o-transition: all 0.3s ease;
         transition: all 0.3s ease;
+        -webkit-tap-highlight-color: transparent;
       }
 
       .close-button:hover {
@@ -1067,21 +1107,45 @@
         margin-bottom: 1rem;
       }
 
+      /* Safari iOS specific fixes */
+      @supports (-webkit-appearance: none) {
+        body {
+          min-height: -webkit-fill-available;
+        }
+
+        .visa-card {
+          -webkit-transform: translate3d(0, 0, 0.1px) scale(1);
+          transform: translate3d(0, 0, 0.1px) scale(1);
+        }
+      }
+
       @media screen and (min-width: 1280px) {
         .visa-card {
-          -webkit-transform: scale(0.95);
-          -moz-transform: scale(0.95);
-          -ms-transform: scale(0.95);
-          transform: scale(0.95);
+          -webkit-transform: translate3d(0, 0, 0.1px) scale(0.95);
+          -moz-transform: translate3d(0, 0, 0.1px) scale(0.95);
+          -ms-transform: translate3d(0, 0, 0.1px) scale(0.95);
+          transform: translate3d(0, 0, 0.1px) scale(0.95);
         }
       }
 
       @media screen and (max-width: 400px) {
         .visa-card {
-          -webkit-transform: scale(0.75);
-          -moz-transform: scale(0.75);
-          -ms-transform: scale(0.75);
-          transform: scale(0.75);
+          -webkit-transform: translate3d(0, 0, 0.1px) scale(0.75);
+          -moz-transform: translate3d(0, 0, 0.1px) scale(0.75);
+          -ms-transform: translate3d(0, 0, 0.1px) scale(0.75);
+          transform: translate3d(0, 0, 0.1px) scale(0.75);
+        }
+      }
+
+      /* Safari-specific optimizations */
+      @media screen and (-webkit-min-device-pixel-ratio: 1) {
+        .holo-base {
+          -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+        }
+
+        .card {
+          isolation: isolate;
         }
       }
     </style>
@@ -1090,7 +1154,7 @@
     <main id="app">
       <section class="visa-card">
         <section class="card">
-          <div class="holo-airport holo-base"></div>
+          <div class="holo-airport overlay-base-bottom"></div>
           <div class="airport-overlay overlay-base"></div>
           <div class="holo holo-base"></div>
           <div class="pattern-overlay overlay-base"></div>
@@ -1331,7 +1395,7 @@
       holoAirport
         .to("#app", {
           "--airport-y": "12%",
-          "--airport-x": "88%",
+          "--airport-x": "188%",
           "--o": 0.9,
           duration: 4.2,
           ease: "power2.inOut",
@@ -1352,7 +1416,7 @@
         })
         .to("#app", {
           "--airport-y": "78%",
-          "--airport-x": "8%",
+          "--airport-x": "68%",
           "--o": 1,
           duration: 4.8,
           ease: "power1.inOut",
