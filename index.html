@@ -15,7 +15,7 @@
     <style>
       :root {
         --bg: #111316;
-        --logopng: url(assets/images/pattern_tile.png);
+        --pattern-png: url(assets/images/pattern_tile.png);
         --airport: url(assets/images/airport.png);
         --airport-mask: url(assets/images/airport_mask.png);
         --c-gradient: url(assets/images/c-gradient.png);
@@ -29,12 +29,14 @@
         --c-gradient-airport: 0% 0%;
         --airport-y: 50%;
         --airport-x: 100%;
+        --grad-angle-1: -45deg;
+        --grad-angle-2: -65deg;
 
         --r-clr-1: #973a37;
         --r-clr-2: #a67739;
-        --r-clr-3: #659c35;
-        --r-clr-4: #359c9c;
-        --r-clr-5: #359c9c;
+        --r-clr-3: #6dc05d;
+        --r-clr-4: #6ad1d1;
+        --r-clr-5: #25cdc4;
         --r-clr-6: #39609c;
         --r-clr-7: #7f3973;
       }
@@ -80,7 +82,6 @@
         position: relative;
       }
 
-      /* Shared text styles */
       .text-white {
         color: white;
       }
@@ -117,7 +118,6 @@
         opacity: 0.8;
       }
 
-      /* Shared layout styles */
       .absolute {
         position: absolute;
       }
@@ -167,7 +167,6 @@
         justify-content: center;
       }
 
-      /* Shared grid layout */
       .grid-2col {
         display: -ms-grid;
         display: grid;
@@ -190,7 +189,6 @@
         margin: 0;
       }
 
-      /* Shared overlay base */
       .overlay-base {
         position: absolute;
         top: 0;
@@ -201,7 +199,6 @@
         mix-blend-mode: overlay;
       }
 
-      /* Bottom-aligned overlay base */
       .overlay-base-bottom {
         position: absolute;
         right: 0;
@@ -210,7 +207,6 @@
         mix-blend-mode: overlay;
       }
 
-      /* Shared holo base */
       .holo-base {
         --space: 5%;
         display: block;
@@ -328,31 +324,35 @@
       }
 
       .pattern-overlay {
-        background-image: var(--logopng);
+        background-image: var(--pattern-png);
         background-size: 35%;
         background-size: var(--pattern-size);
         background-repeat: repeat;
         background-position: 0%;
         opacity: 0.5;
         z-index: 2;
+        mask-image: var(--airport-mask);
+        /* mask-mode: alpha; */
+        mask-composite: exclude;
       }
 
       .airport-overlay {
         background-image: var(--airport);
         background-size: 100%;
         background-position: 100% 100%;
-        z-index: 10;
+        z-index: 100;
         opacity: 0.6;
-        -webkit-filter: brightness(1.2) contrast(0.5);
-        filter: brightness(1.2) contrast(0.5);
+        -webkit-filter: brightness(1.2) contrast(0.9);
+        filter: brightness(1.2) contrast(0.9);
+        background-blend-mode: overlay;
       }
 
       .holo-airport {
         height: 200px;
         position: absolute;
         bottom: 0;
-        background-image: -webkit-linear-gradient(
-          -45deg,
+        /* background-image: -webkit-linear-gradient(
+          var(--grad-angle-1),
           #973a37,
           #a67739,
           #659c35,
@@ -385,7 +385,6 @@
           #359c9c,
           #39609c,
           #7f3973,
-          #973a37,
           #a67739,
           #659c35,
           #359c9c,
@@ -400,9 +399,9 @@
           #39609c,
           #7f3973,
           #973a37
-        );
+        ); */
         background-image: linear-gradient(
-          -45deg,
+          var(--grad-angle-2),
           var(--r-clr-1),
           var(--r-clr-2),
           var(--r-clr-3),
@@ -427,14 +426,13 @@
           var(--r-clr-1)
         );
         background-blend-mode: luminosity, soft-light;
-
-        /* background-position: 100% 50%; */
+        background-size: 1820px 1820px;
+        background-repeat: repeat;
         background-position: var(--airport-x) var(--airport-y);
-        /* -webkit-mask-image: var(--airport), var(--c-gradient); */
         mask-image: var(--airport), var(--c-gradient);
-        -webkit-mask-size: 444px, 300% 200%;
-        mask-size: 100%, 220% 300%;
-        -webkit-mask-repeat: no-repeat, no-repeat;
+        /* -webkit-mask-size: 444px, 300% 200%; */
+        mask-size: 100%, 150% 2100%;
+        -webkit-mask-repeat: no-repeat, repeat;
         mask-repeat: no-repeat, no-repeat;
         -webkit-mask-position: 100% 100%, var(--c-gradient-airport);
         mask-position: 100% 100%, var(--c-gradient-airport);
@@ -446,17 +444,17 @@
       }
 
       .holo {
-        background-image: -webkit-linear-gradient(-45deg, #973a37, #359c9c),
+        /* background-image: -webkit-linear-gradient(-45deg, #973a37, #359c9c),
           -webkit-linear-gradient(-65deg, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37);
         background-image: -moz-linear-gradient(-45deg, #973a37, #359c9c),
-          -moz-linear-gradient(-65deg, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37);
+          -moz-linear-gradient(-65deg, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37); */
         background-image: linear-gradient(
-            -45deg,
+            var(--grad-angle-1),
             var(--r-clr-1),
             var(--r-clr-5)
           ),
           linear-gradient(
-            -65deg,
+            var(--grad-angle-2),
             var(--r-clr-1),
             var(--r-clr-2),
             var(--r-clr-3),
@@ -480,11 +478,12 @@
             var(--r-clr-7),
             var(--r-clr-1)
           );
-        /* background-position: 50% 50%; */
         background-position: var(--h) var(--h);
         background-blend-mode: luminosity, soft-light;
-        -webkit-mask-image: var(--logopng), var(--c-gradient);
-        mask-image: var(--logopng), var(--c-gradient);
+        background-size: 1200px 1200px;
+        background-repeat: no-repeat;
+        -webkit-mask-image: var(--pattern-png), var(--c-gradient);
+        mask-image: var(--pattern-png), var(--c-gradient);
         -webkit-mask-size: 35%, 220% 50%;
         mask-size: var(--pattern-size), 220% 50%;
         -webkit-mask-repeat: repeat, no-repeat;
@@ -496,7 +495,7 @@
         mix-blend-mode: screen;
         -webkit-filter: brightness(0.9) contrast(0.7) saturate(2);
         filter: brightness(0.9) contrast(0.7) saturate(2);
-        z-index: 30;
+        z-index: 1;
       }
 
       .logo {
@@ -628,7 +627,6 @@
         margin-bottom: 1rem;
       }
 
-      /* Text sizing for different sections */
       .personal-info .value {
         font-size: 1rem;
       }
@@ -712,21 +710,17 @@
         fill: #333;
       }
 
-      /* Hide print QR code on screen */
       .print-qr-code {
         display: none;
       }
 
-      /* Print styles - only QR code changes */
       @media print {
-        /* Force background images to print */
         * {
           -webkit-print-color-adjust: exact !important;
           color-adjust: exact !important;
           print-color-adjust: exact !important;
         }
 
-        /* Ensure all backgrounds print */
         .card,
         .holo-airport,
         .holo,
@@ -746,7 +740,6 @@
           filter: contrast(1) brightness(1) opacity(0.5);
         }
 
-        /* Disable masks for print - they don't work reliably */
         .holo-airport,
         .holo,
         .pattern-overlay,
@@ -757,7 +750,6 @@
           mask-image: none !important;
         }
 
-        /* Simple overlay effects for print */
         .holo-airport {
           background-image: -webkit-linear-gradient(
             -45deg,
@@ -879,18 +871,16 @@
         }
 
         .pattern-overlay {
-          background-image: var(--logopng) !important;
+          background-image: var(--pattern-png) !important;
           background-size: 35% !important;
           background-repeat: repeat !important;
           background-position: 0% !important;
           opacity: 0.3 !important;
         }
 
-        /* Fix masks for print compatibility */
-
         .holo {
-          -webkit-mask-image: var(--logopng), var(--c-gradient) !important;
-          mask-image: var(--logopng), var(--c-gradient) !important;
+          -webkit-mask-image: var(--pattern-png), var(--c-gradient) !important;
+          mask-image: var(--pattern-png), var(--c-gradient) !important;
           -webkit-mask-size: 35%, 220% 50% !important;
           mask-size: 35%, 220% 50% !important;
           -webkit-mask-repeat: repeat, no-repeat !important;
@@ -899,41 +889,26 @@
           mask-position: 0%, 15% -140% !important;
           -webkit-mask-composite: source-in !important;
           mask-composite: intersect !important;
-          /* Fallback for browsers that don't support mask-composite */
           -webkit-mask-composite: source-in !important;
         }
 
-        /* Ensure mask images are loaded by forcing them in root */
         html {
           --airport-print: url(assets/images/airport.png) !important;
           --c-gradient-print: url(assets/images/c-gradient.png) !important;
-          --logopng-print: url(assets/images/pattern_tile.png) !important;
+          --pattern-png-print: url(assets/images/pattern_tile.png) !important;
         }
 
-        /* Alternative mask approach for better print support */
-        /* .holo-airport {
-          -webkit-mask: var(--airport-print), var(--c-gradient-print) !important;
-          mask: var(--airport-print), var(--c-gradient-print) !important;
-          -webkit-mask-size: 100%, 220% 50% !important;
-          mask-size: 100%, 220% 50% !important;
-          background-repeat: no-repeat !important;
-          -webkit-mask-repeat: no-repeat !important;
-          mask-repeat: no-repeat !important;
-        } */
-
         .holo {
-          -webkit-mask: var(--logopng-print), var(--c-gradient-print) !important;
-          mask: var(--logopng-print), var(--c-gradient-print) !important;
+          -webkit-mask: var(--pattern-png-print), var(--c-gradient-print) !important;
+          mask: var(--pattern-png-print), var(--c-gradient-print) !important;
           -webkit-mask-size: 35%, 220% 50% !important;
           mask-size: 35%, 220% 50% !important;
         }
 
-        /* Hide QR button when printing */
         .qr-button {
           display: none !important;
         }
 
-        /* Show QR code when printing */
         .print-qr-code {
           display: block !important;
           position: absolute;
@@ -962,12 +937,10 @@
           color: #666;
         }
 
-        /* Adjust content padding to accommodate QR code */
         #content {
           padding-bottom: 6rem;
         }
 
-        /* Hide modal when printing */
         .modal {
           display: none !important;
         }
@@ -1107,7 +1080,6 @@
         margin-bottom: 1rem;
       }
 
-      /* Safari iOS specific fixes */
       @supports (-webkit-appearance: none) {
         body {
           min-height: -webkit-fill-available;
@@ -1137,7 +1109,6 @@
         }
       }
 
-      /* Safari-specific optimizations */
       @media screen and (-webkit-min-device-pixel-ratio: 1) {
         .holo-base {
           -webkit-transform: translateZ(0);
@@ -1235,7 +1206,6 @@
             </svg>
           </button>
 
-          <!-- QR Code for printing only -->
           <div class="print-qr-code">
             <img
               src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://www.immigration.gov.mv/"
@@ -1294,38 +1264,119 @@
         .to("#app", {
           "--h": "85%",
           "--o": 0.9,
-          duration: 4.5,
+          "--r-clr-1": "#a67739",
+          "--r-clr-2": "#659c35",
+          "--r-clr-3": "#359c9c",
+          "--r-clr-4": "#39609c",
+          "--r-clr-5": "#7f3973",
+          "--r-clr-6": "#973a37",
+          "--r-clr-7": "#a67739",
+          duration: 9,
           ease: "power1.inOut",
         })
         .to("#app", {
           "--h": "25%",
           "--o": 1,
-          duration: 6.2,
-          ease: "back.inOut(1.2)",
+          "--r-clr-1": "#659c35",
+          "--r-clr-2": "#359c9c",
+          "--r-clr-3": "#39609c",
+          "--r-clr-4": "#7f3973",
+          "--r-clr-5": "#973a37",
+          "--r-clr-6": "#a67739",
+          "--r-clr-7": "#659c35",
+          duration: 12.4,
+          ease: "power1.inOut",
         })
         .to("#app", {
           "--h": "95%",
           "--o": 0.7,
-          duration: 3.6,
-          ease: "elastic.inOut(1, 0.5)",
+          "--r-clr-1": "#359c9c",
+          "--r-clr-2": "#39609c",
+          "--r-clr-3": "#7f3973",
+          "--r-clr-4": "#973a37",
+          "--r-clr-5": "#a67739",
+          "--r-clr-6": "#659c35",
+          "--r-clr-7": "#359c9c",
+          duration: 7.2,
+          ease: "power1.inOut",
         })
         .to("#app", {
           "--h": "45%",
           "--o": 1,
-          duration: 5.4,
-          ease: "power2.inOut",
+          "--r-clr-1": "#39609c",
+          "--r-clr-2": "#7f3973",
+          "--r-clr-3": "#973a37",
+          "--r-clr-4": "#a67739",
+          "--r-clr-5": "#659c35",
+          "--r-clr-6": "#359c9c",
+          "--r-clr-7": "#39609c",
+          duration: 10.8,
+          ease: "power1.inOut",
         })
         .to("#app", {
           "--h": "75%",
           "--o": 0.8,
-          duration: 4.4,
-          ease: "sine.inOut",
+          "--r-clr-1": "#7f3973",
+          "--r-clr-2": "#973a37",
+          "--r-clr-3": "#a67739",
+          "--r-clr-4": "#659c35",
+          "--r-clr-5": "#359c9c",
+          "--r-clr-6": "#39609c",
+          "--r-clr-7": "#7f3973",
+          duration: 8.8,
+          ease: "power1.inOut",
         })
         .to("#app", {
           "--h": "15%",
           "--o": 1,
-          duration: 6.8,
-          ease: "power3.inOut",
+          "--r-clr-1": "#973a37",
+          "--r-clr-2": "#a67739",
+          "--r-clr-3": "#659c35",
+          "--r-clr-4": "#359c9c",
+          "--r-clr-5": "#359c9c",
+          "--r-clr-6": "#39609c",
+          "--r-clr-7": "#7f3973",
+          duration: 13.6,
+          ease: "power1.inOut",
+        });
+
+      const gradientAngleLoop = gsap.timeline({ repeat: -1, repeatDelay: 0 });
+      gradientAngleLoop
+        .to("#app", {
+          "--grad-angle-1": "45deg",
+          "--grad-angle-2": "25deg",
+          duration: 3,
+          ease: "none",
+        })
+        .to("#app", {
+          "--grad-angle-1": "135deg",
+          "--grad-angle-2": "115deg",
+          duration: 3,
+          ease: "none",
+        })
+        .to("#app", {
+          "--grad-angle-1": "225deg",
+          "--grad-angle-2": "205deg",
+          duration: 3,
+          ease: "none",
+        })
+        .to("#app", {
+          "--grad-angle-1": "315deg",
+          "--grad-angle-2": "295deg",
+          duration: 3,
+          ease: "none",
+        })
+        .to("#app", {
+          "--grad-angle-1": "405deg",
+          "--grad-angle-2": "385deg",
+          duration: 3,
+          ease: "none",
+        })
+        .to("#app", {
+          "--grad-angle-1": "495deg",
+          "--grad-angle-2": "475deg",
+          duration: 3,
+          ease: "none",
         });
 
       const cGradientLoop = gsap.timeline({ repeat: -1, repeatDelay: 0 });
@@ -1337,24 +1388,24 @@
           },
           {
             "--c-gradient-pos": "75% 180%",
-            duration: 16,
-            ease: "power2.inOut",
+            duration: 32,
+            ease: "power1.inOut",
           }
         )
         .to("#app", {
           "--c-gradient-pos": "25% -160%",
-          duration: 12,
-          ease: "back.inOut(1.3)",
+          duration: 24,
+          ease: "power1.inOut",
         })
         .to("#app", {
           "--c-gradient-pos": "95% 220%",
-          duration: 18,
-          ease: "elastic.inOut(1, 0.3)",
+          duration: 36,
+          ease: "power1.inOut",
         })
         .to("#app", {
           "--c-gradient-pos": "5% -120%",
-          duration: 14,
-          ease: "power3.inOut",
+          duration: 28,
+          ease: "power1.inOut",
         });
 
       const holoAirportLoop = gsap.timeline({ repeat: -1, repeatDelay: 0 });
@@ -1366,29 +1417,29 @@
           },
           {
             "--c-gradient-airport": "85% 170%",
-            duration: 9,
-            ease: "power2.inOut",
+            duration: 18,
+            ease: "power1.inOut",
           }
         )
         .to("#app", {
           "--c-gradient-airport": "15% -140%",
-          duration: 7.6,
-          ease: "back.inOut(1.5)",
+          duration: 15.2,
+          ease: "power1.inOut",
         })
         .to("#app", {
           "--c-gradient-airport": "105% 200%",
-          duration: 10.4,
-          ease: "elastic.inOut(1, 0.4)",
+          duration: 20.8,
+          ease: "power1.inOut",
         })
         .to("#app", {
           "--c-gradient-airport": "45% -160%",
-          duration: 8.2,
-          ease: "sine.inOut",
+          duration: 16.4,
+          ease: "power1.inOut",
         })
         .to("#app", {
           "--c-gradient-airport": "75% 240%",
-          duration: 7.2,
-          ease: "power3.inOut",
+          duration: 14.4,
+          ease: "power1.inOut",
         });
 
       const holoAirport = gsap.timeline({ repeat: -1, repeatDelay: 0 });
@@ -1397,57 +1448,57 @@
           "--airport-y": "12%",
           "--airport-x": "188%",
           "--o": 0.9,
-          duration: 4.2,
-          ease: "power2.inOut",
+          duration: 8.4,
+          ease: "power1.inOut",
         })
         .to("#app", {
           "--airport-y": "97%",
           "--airport-x": "23%",
           "--o": 1,
-          duration: 6.6,
-          ease: "back.inOut(1.4)",
+          duration: 13.2,
+          ease: "power1.inOut",
         })
         .to("#app", {
           "--airport-y": "35%",
           "--airport-x": "115%",
           "--o": 0.8,
-          duration: 5.6,
-          ease: "elastic.inOut(1, 0.6)",
+          duration: 11.2,
+          ease: "power1.inOut",
         })
         .to("#app", {
           "--airport-y": "78%",
           "--airport-x": "68%",
           "--o": 1,
-          duration: 4.8,
+          duration: 9.6,
           ease: "power1.inOut",
         })
         .to("#app", {
           "--airport-y": "51%",
           "--airport-x": "92%",
           "--o": 0.7,
-          duration: 7.4,
-          ease: "sine.inOut",
+          duration: 14.8,
+          ease: "power1.inOut",
         })
         .to("#app", {
           "--airport-y": "19%",
           "--airport-x": "67%",
           "--o": 1,
-          duration: 5.2,
-          ease: "power3.inOut",
+          duration: 10.4,
+          ease: "power1.inOut",
         })
         .to("#app", {
           "--airport-y": "84%",
           "--airport-x": "41%",
           "--o": 0.9,
-          duration: 6.2,
-          ease: "back.inOut(1.1)",
+          duration: 12.4,
+          ease: "power1.inOut",
         })
         .to("#app", {
           "--airport-y": "29%",
           "--airport-x": "76%",
           "--o": 0.8,
-          duration: 5.8,
-          ease: "elastic.inOut(1, 0.2)",
+          duration: 11.6,
+          ease: "power1.inOut",
         });
     </script>
   </body>
