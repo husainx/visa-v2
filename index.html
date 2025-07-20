@@ -721,23 +721,12 @@
           print-color-adjust: exact !important;
         }
 
-        .card,
-        .holo-airport,
-        .holo,
-        .pattern-overlay,
-        .airport-overlay {
+        .card {
+          background-color: white !important;
+          background-image: none !important;
           -webkit-print-color-adjust: exact !important;
           color-adjust: exact !important;
           print-color-adjust: exact !important;
-        }
-
-        .pattern-overlay {
-          -webkit-filter: contrast(0.2) brightness(0.2);
-          filter: contrast(0.2) brightness(0.2);
-        }
-        .airport-overlay {
-          -webkit-filter: contrast(1) brightness(1) opacity(0.5);
-          filter: contrast(1) brightness(1) opacity(0.5);
         }
 
         .holo-airport,
@@ -748,126 +737,8 @@
           mask: none !important;
           -webkit-mask-image: none !important;
           mask-image: none !important;
-        }
-
-        .holo-airport {
-          background-image: -webkit-linear-gradient(
-            -45deg,
-            #973a37,
-            #a67739,
-            #659c35,
-            #359c9c,
-            #359c9c,
-            #39609c,
-            #7f3973,
-            #973a37,
-            #a67739,
-            #659c35,
-            #359c9c,
-            #359c9c,
-            #39609c,
-            #7f3973,
-            #973a37,
-            #a67739,
-            #659c35,
-            #359c9c,
-            #359c9c,
-            #39609c,
-            #7f3973,
-            #973a37
-          ) !important;
-          background-image: -moz-linear-gradient(
-            -45deg,
-            #973a37,
-            #a67739,
-            #659c35,
-            #359c9c,
-            #359c9c,
-            #39609c,
-            #7f3973,
-            #973a37,
-            #a67739,
-            #659c35,
-            #359c9c,
-            #359c9c,
-            #39609c,
-            #7f3973,
-            #973a37,
-            #a67739,
-            #659c35,
-            #359c9c,
-            #359c9c,
-            #39609c,
-            #7f3973,
-            #973a37
-          ) !important;
-          background-image: linear-gradient(
-            -45deg,
-            #973a37,
-            #a67739,
-            #659c35,
-            #359c9c,
-            #359c9c,
-            #39609c,
-            #7f3973,
-            #973a37,
-            #a67739,
-            #659c35,
-            #359c9c,
-            #359c9c,
-            #39609c,
-            #7f3973,
-            #973a37,
-            #a67739,
-            #659c35,
-            #359c9c,
-            #359c9c,
-            #39609c,
-            #7f3973,
-            #973a37
-          ) !important;
-          background-size: 100vw 100vh !important;
-          background-position: 100% 50% !important;
-          background-repeat: no-repeat !important;
-          opacity: 0.3 !important;
-        }
-
-        .holo {
-          background-image: -webkit-linear-gradient(-45deg, #973a37, #359c9c),
-            -webkit-linear-gradient(-65deg, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37) !important;
-          background-image: -moz-linear-gradient(-45deg, #973a37, #359c9c),
-            -moz-linear-gradient(-65deg, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37) !important;
-          background-image: linear-gradient(-45deg, #973a37, #359c9c),
-            linear-gradient(
-              -65deg,
-              #973a37,
-              #a67739,
-              #659c35,
-              #359c9c,
-              #359c9c,
-              #39609c,
-              #7f3973,
-              #973a37,
-              #a67739,
-              #659c35,
-              #359c9c,
-              #359c9c,
-              #39609c,
-              #7f3973,
-              #973a37,
-              #a67739,
-              #659c35,
-              #359c9c,
-              #359c9c,
-              #39609c,
-              #7f3973,
-              #973a37
-            ) !important;
-          background-size: 100vw 100vh !important;
-          background-position: 50% 50% !important;
-          background-repeat: no-repeat !important;
-          background-blend-mode: luminosity, soft-light !important;
-          opacity: 0.4 !important;
+          mix-blend-mode: normal !important;
+          background-blend-mode: normal !important;
         }
 
         .pattern-overlay {
@@ -875,34 +746,52 @@
           background-size: 35% !important;
           background-repeat: repeat !important;
           background-position: 0% !important;
-          opacity: 0.3 !important;
+          opacity: 0.1 !important;
+          -webkit-filter: grayscale(100%) contrast(0.3) brightness(0.7);
+          filter: grayscale(100%) contrast(0.3) brightness(0.7);
+        }
+
+        .airport-overlay {
+          background-image: var(--airport) !important;
+          background-size: 100% !important;
+          background-position: 100% 100% !important;
+          opacity: 0.15 !important;
+          -webkit-filter: grayscale(100%) contrast(0.4) brightness(0.6);
+          filter: grayscale(100%) contrast(0.4) brightness(0.6);
+        }
+
+        .holo-airport {
+          background-image: none !important;
+          opacity: 0.1 !important;
+          background-color: #f0f0f0 !important;
         }
 
         .holo {
-          -webkit-mask-image: var(--pattern-png), var(--c-gradient) !important;
-          mask-image: var(--pattern-png), var(--c-gradient) !important;
-          -webkit-mask-size: 35%, 220% 50% !important;
-          mask-size: 35%, 220% 50% !important;
-          -webkit-mask-repeat: repeat, no-repeat !important;
-          mask-repeat: repeat, no-repeat !important;
-          -webkit-mask-position: 0%, 15% -140% !important;
-          mask-position: 0%, 15% -140% !important;
-          -webkit-mask-composite: source-in !important;
-          mask-composite: intersect !important;
-          -webkit-mask-composite: source-in !important;
+          background-image: none !important;
+          opacity: 0.05 !important;
+          background-color: #f8f8f8 !important;
         }
 
-        html {
-          --airport-print: url(assets/images/airport.png) !important;
-          --c-gradient-print: url(assets/images/c-gradient.png) !important;
-          --pattern-png-print: url(assets/images/pattern_tile.png) !important;
+        .logo {
+          -webkit-filter: brightness(0) !important;
+          filter: brightness(0) !important;
         }
 
-        .holo {
-          -webkit-mask: var(--pattern-png-print), var(--c-gradient-print) !important;
-          mask: var(--pattern-png-print), var(--c-gradient-print) !important;
-          -webkit-mask-size: 35%, 220% 50% !important;
-          mask-size: 35%, 220% 50% !important;
+        .grid-2col,
+        .grid-1col {
+          color: black !important;
+        }
+
+        .name {
+          color: black !important;
+        }
+
+        .visa-details .title {
+          color: black !important;
+        }
+
+        .visa-details {
+          border-top: 1px solid rgba(0, 0, 0, 0.3) !important;
         }
 
         .qr-button {
