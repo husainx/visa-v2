@@ -16,7 +16,7 @@
       :root {
         --bg: #111316;
         --pattern-png: url(assets/images/pattern_tile.png);
-        --airport: url(assets/images/airport.png);
+        --airport: url(assets/images/airport_01.png);
         --airport-mask: url(assets/images/airport_mask.png);
         --c-gradient: url(assets/images/c-gradient.png);
         --pattern-size: 35%;
@@ -31,7 +31,6 @@
         --airport-x: 100%;
         --grad-angle-1: -45deg;
         --grad-angle-2: -65deg;
-
         --r-clr-1: #973a37;
         --r-clr-2: #a67739;
         --r-clr-3: #6dc05d;
@@ -224,7 +223,7 @@
         mask-composite: intersect;
         -webkit-filter: brightness(0.3) contrast(0.7) saturate(2);
         filter: brightness(0.3) contrast(0.7) saturate(2);
-        opacity: 0;
+        /* opacity: 0; */
         opacity: var(--o);
         will-change: opacity, transform;
         -webkit-backface-visibility: hidden;
@@ -323,13 +322,17 @@
         will-change: transform;
       }
 
+      /* .flag {
+        position: absolute;
+        background-image: var(--flag);
+      } */
       .pattern-overlay {
         background-image: var(--pattern-png);
         background-size: 35%;
         background-size: var(--pattern-size);
         background-repeat: repeat;
         background-position: 0%;
-        opacity: 0.5;
+        opacity: 0.3;
         z-index: 2;
         mask-image: var(--airport-mask);
         /* mask-mode: alpha; */
@@ -748,7 +751,7 @@
           background-position: 0% !important;
           opacity: 0.1 !important;
           -webkit-filter: grayscale(100%) contrast(0.3) brightness(0.7);
-          filter: grayscale(100%) contrast(0.3) brightness(0.7);
+          filter: grayscale(100%) contrast(0.3) brightness(0.2);
         }
 
         .airport-overlay {
@@ -804,13 +807,13 @@
           bottom: 1rem;
           right: 1rem;
           text-align: center;
-          background: white;
+          background: rgb(255, 255, 255);
           padding: 0.5rem;
           -webkit-border-radius: 0.5rem;
           -moz-border-radius: 0.5rem;
           border-radius: 0.5rem;
           border: 1px solid rgba(0, 0, 0, 0.2);
-          z-index: 10;
+          z-index: 60;
         }
 
         .print-qr-code img {
@@ -1389,6 +1392,11 @@
           duration: 11.6,
           ease: "power1.inOut",
         });
+      document.addEventListener("DOMContentLoaded", function () {
+        var flag = document.querySelector(".flag");
+        TweenMax.set(flag, { x: 65 });
+        TweenMax.to(flag, 2, { x: 0, repeat: -1, ease: Linear.easeNone });
+      });
     </script>
   </body>
 </html>
