@@ -233,7 +233,7 @@
       h1 {
         font-family: "Roboto Mono", monospace;
         text-align: center;
-        z-index: 1;
+        z-index: 10;
         color: white;
       }
 
@@ -244,7 +244,7 @@
         place-content: center;
         overflow: hidden;
         padding: 50px;
-        z-index: 999;
+        z-index: 110;
         -webkit-transform: translate3d(0, 0, 0.1px);
         -moz-transform: translate3d(0, 0, 0.1px);
         -ms-transform: translate3d(0, 0, 0.1px);
@@ -333,7 +333,7 @@
         background-repeat: repeat;
         background-position: 0%;
         opacity: 0.3;
-        z-index: 2;
+        z-index: 30;
         mask-image: var(--airport-mask);
         /* mask-mode: alpha; */
         mask-composite: exclude;
@@ -343,7 +343,7 @@
         background-image: var(--airport);
         background-size: 100%;
         background-position: 100% 100%;
-        z-index: 100;
+        z-index: 50;
         opacity: 0.6;
         -webkit-filter: brightness(1.2) contrast(0.9);
         filter: brightness(1.2) contrast(0.9);
@@ -433,7 +433,6 @@
         background-repeat: repeat;
         background-position: var(--airport-x) var(--airport-y);
         mask-image: var(--airport), var(--c-gradient);
-        /* -webkit-mask-size: 444px, 300% 200%; */
         mask-size: 100%, 150% 2100%;
         -webkit-mask-repeat: no-repeat, repeat;
         mask-repeat: no-repeat, no-repeat;
@@ -442,7 +441,7 @@
         -webkit-mask-composite: clear;
         mask-composite: intersect;
         mix-blend-mode: color-dodge;
-        z-index: 31;
+        z-index: 40;
         overflow: hidden;
       }
 
@@ -498,7 +497,7 @@
         mix-blend-mode: screen;
         -webkit-filter: brightness(0.9) contrast(0.7) saturate(2);
         filter: brightness(0.9) contrast(0.7) saturate(2);
-        z-index: 1;
+        z-index: 20;
       }
 
       .logo {
@@ -513,14 +512,14 @@
         transform: translateX(-50%);
         -webkit-filter: brightness(0) invert(1);
         filter: brightness(0) invert(1);
-        z-index: 100;
+        z-index: 60;
       }
 
       #content {
         position: relative;
         width: 100%;
         height: 100%;
-        z-index: 10;
+        z-index: 80;
         padding: 4rem 1.5rem 1.5rem 1.5rem;
         display: -webkit-box;
         display: -webkit-flex;
@@ -578,6 +577,15 @@
         -webkit-flex-shrink: 0;
         -ms-flex-negative: 0;
         flex-shrink: 0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 90;
+      }
+
+      .photo-container:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       }
 
       .photo-container img {
@@ -813,7 +821,7 @@
           -moz-border-radius: 0.5rem;
           border-radius: 0.5rem;
           border: 1px solid rgba(0, 0, 0, 0.2);
-          z-index: 60;
+          z-index: 70;
         }
 
         .print-qr-code img {
@@ -856,7 +864,7 @@
         -moz-box-pack: center;
         -ms-flex-pack: center;
         justify-content: center;
-        z-index: 1000;
+        z-index: 120;
         -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
         -webkit-overflow-scrolling: touch;
@@ -972,6 +980,65 @@
         margin-bottom: 1rem;
       }
 
+      .photo-modal-content {
+        max-width: 500px;
+        padding: 2.5rem;
+      }
+
+      .photo-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.5rem;
+        text-align: center;
+      }
+
+      .photo-description {
+        font-size: 1rem;
+        color: #666;
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .photo-modal-container {
+        margin: 1.5rem 0;
+        text-align: center;
+      }
+
+      .photo-modal-container img {
+        width: 280px;
+        height: 350px;
+        object-fit: cover;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border: 3px solid #f0f0f0;
+      }
+
+      .close-button-bottom {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+        width: 100%;
+        max-width: 200px;
+      }
+
+      .close-button-bottom:hover {
+        background: #0056b3;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+      }
+
+      .close-button-bottom:active {
+        transform: translateY(0);
+      }
+
       @supports (-webkit-appearance: none) {
         body {
           min-height: -webkit-fill-available;
@@ -1025,7 +1092,7 @@
 
           <div id="content">
             <div class="photo-name-section">
-              <div class="photo-container">
+              <div class="photo-container" onclick="openPhotoModal()">
                 <img
                   src="https://i.pravatar.cc/150?u=uniqueUserId12"
                   alt="Profile Photo"
@@ -1126,6 +1193,25 @@
       </div>
     </div>
 
+    <div id="photoModal" class="modal" onclick="closePhotoModal(event)">
+      <div
+        class="modal-content photo-modal-content"
+        onclick="event.stopPropagation()"
+      >
+        <p class="photo-description">Photo of the visa holder</p>
+        <div class="photo-modal-container">
+          <img
+            src="https://i.pravatar.cc/400?u=uniqueUserId12"
+            alt="Profile Photo"
+          />
+        </div>
+        <p class="photo-description">Muthuswami Venugopal Iyer</p>
+        <button class="close-button-bottom" onclick="closePhotoModal()">
+          Close
+        </button>
+      </div>
+    </div>
+
     <script>
       function openQRModal() {
         const modal = document.getElementById("qrModal");
@@ -1145,9 +1231,28 @@
         }
       }
 
+      function openPhotoModal() {
+        const modal = document.getElementById("photoModal");
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closePhotoModal(event) {
+        if (
+          !event ||
+          event.target === event.currentTarget ||
+          event.target.classList.contains("close-button-bottom")
+        ) {
+          const modal = document.getElementById("photoModal");
+          modal.classList.remove("active");
+          document.body.style.overflow = "auto";
+        }
+      }
+
       document.addEventListener("keydown", function (event) {
         if (event.key === "Escape") {
           closeQRModal();
+          closePhotoModal();
         }
       });
 
@@ -1392,11 +1497,6 @@
           duration: 11.6,
           ease: "power1.inOut",
         });
-      document.addEventListener("DOMContentLoaded", function () {
-        var flag = document.querySelector(".flag");
-        TweenMax.set(flag, { x: 65 });
-        TweenMax.to(flag, 2, { x: 0, repeat: -1, ease: Linear.easeNone });
-      });
     </script>
   </body>
 </html>
