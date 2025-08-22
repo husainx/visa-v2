@@ -196,6 +196,13 @@
         left: 0;
         background-repeat: no-repeat;
         mix-blend-mode: overlay;
+
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        overflow: hidden;
       }
 
       .overlay-base-bottom {
@@ -204,6 +211,13 @@
         left: 0;
         background-repeat: no-repeat;
         mix-blend-mode: overlay;
+
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        overflow: hidden;
       }
 
       .holo-base {
@@ -223,11 +237,15 @@
         mask-composite: intersect;
         -webkit-filter: brightness(0.3) contrast(0.7) saturate(2);
         filter: brightness(0.3) contrast(0.7) saturate(2);
-        /* opacity: 0; */
+
         opacity: var(--o);
         will-change: opacity, transform;
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
+
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        overflow: hidden;
       }
 
       h1 {
@@ -318,14 +336,11 @@
         -moz-transform-style: preserve-3d;
         transform-style: preserve-3d;
         overflow: hidden;
+        -webkit-overflow-scrolling: touch;
         position: relative;
         will-change: transform;
       }
 
-      /* .flag {
-        position: absolute;
-        background-image: var(--flag);
-      } */
       .pattern-overlay {
         background-image: var(--pattern-png);
         background-size: 35%;
@@ -335,8 +350,15 @@
         opacity: 0.3;
         z-index: 30;
         mask-image: var(--airport-mask);
-        /* mask-mode: alpha; */
+
         mask-composite: exclude;
+        -webkit-mask-composite: xor;
+
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
       }
 
       .airport-overlay {
@@ -348,61 +370,18 @@
         -webkit-filter: brightness(1.2) contrast(0.9);
         filter: brightness(1.2) contrast(0.9);
         background-blend-mode: overlay;
+
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
       }
 
       .holo-airport {
         height: 200px;
         position: absolute;
         bottom: 0;
-        /* background-image: -webkit-linear-gradient(
-          var(--grad-angle-1),
-          #973a37,
-          #a67739,
-          #659c35,
-          #359c9c,
-          #359c9c,
-          #39609c,
-          #7f3973,
-          #973a37,
-          #a67739,
-          #659c35,
-          #359c9c,
-          #359c9c,
-          #39609c,
-          #7f3973,
-          #973a37,
-          #a67739,
-          #659c35,
-          #359c9c,
-          #359c9c,
-          #39609c,
-          #7f3973,
-          #973a37
-        );
-        background-image: -moz-linear-gradient(
-          -45deg,
-          #973a37,
-          #a67739,
-          #659c35,
-          #359c9c,
-          #359c9c,
-          #39609c,
-          #7f3973,
-          #a67739,
-          #659c35,
-          #359c9c,
-          #359c9c,
-          #39609c,
-          #7f3973,
-          #973a37,
-          #a67739,
-          #659c35,
-          #359c9c,
-          #359c9c,
-          #39609c,
-          #7f3973,
-          #973a37
-        ); */
         background-image: linear-gradient(
           var(--grad-angle-2),
           var(--r-clr-1),
@@ -443,13 +422,15 @@
         mix-blend-mode: color-dodge;
         z-index: 40;
         overflow: hidden;
+
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
       }
 
       .holo {
-        /* background-image: -webkit-linear-gradient(-45deg, #973a37, #359c9c),
-          -webkit-linear-gradient(-65deg, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37);
-        background-image: -moz-linear-gradient(-45deg, #973a37, #359c9c),
-          -moz-linear-gradient(-65deg, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37, #a67739, #659c35, #359c9c, #359c9c, #39609c, #7f3973, #973a37); */
         background-image: linear-gradient(
             var(--grad-angle-1),
             var(--r-clr-1),
@@ -498,6 +479,12 @@
         -webkit-filter: brightness(0.9) contrast(0.7) saturate(2);
         filter: brightness(0.9) contrast(0.7) saturate(2);
         z-index: 20;
+
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
       }
 
       .logo {
@@ -520,7 +507,7 @@
         width: 100%;
         height: 100%;
         z-index: 80;
-        padding: 4rem 1.5rem 1.5rem 1.5rem;
+        padding: 4rem 2rem 1.5rem 2rem;
         display: -webkit-box;
         display: -webkit-flex;
         display: -moz-box;
@@ -538,6 +525,13 @@
         -moz-box-pack: start;
         -ms-flex-pack: start;
         justify-content: flex-start;
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        overflow: hidden;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
       }
 
       .photo-name-section {
@@ -623,6 +617,8 @@
       .visa-details {
         border-top: 1px solid rgba(255, 255, 255, 0.3);
         padding-top: 1.2rem;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
       }
 
       .visa-details .title {
@@ -652,7 +648,7 @@
 
       .qr-button {
         position: absolute;
-        bottom: 2rem;
+        bottom: 1.5rem;
         left: 50%;
         -webkit-transform: translateX(-50%);
         -moz-transform: translateX(-50%);
