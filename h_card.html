@@ -1166,6 +1166,50 @@
           -ms-transform: translate3d(0, 0, 0.1px) scale(0.5);
           transform: translate3d(0, 0, 0.1px) scale(0.5);
         }
+
+        .visa-card.flipped {
+          -webkit-transform: translate3d(0, 0, 0.1px) scale(0.5) rotateY(180deg);
+          -moz-transform: translate3d(0, 0, 0.1px) scale(0.5) rotateY(180deg);
+          -ms-transform: translate3d(0, 0, 0.1px) scale(0.5) rotateY(180deg);
+          transform: translate3d(0, 0, 0.1px) scale(0.5) rotateY(180deg);
+        }
+      }
+
+      /* Flipped state responsive scaling */
+      @media screen and (max-width: 768px) {
+        .visa-card.flipped {
+          -webkit-transform: translate3d(0, 0, 0.1px) scale(0.8) rotateY(180deg);
+          -moz-transform: translate3d(0, 0, 0.1px) scale(0.8) rotateY(180deg);
+          -ms-transform: translate3d(0, 0, 0.1px) scale(0.8) rotateY(180deg);
+          transform: translate3d(0, 0, 0.1px) scale(0.8) rotateY(180deg);
+        }
+      }
+
+      @media screen and (max-width: 600px) {
+        .visa-card.flipped {
+          -webkit-transform: translate3d(0, 0, 0.1px) scale(0.7) rotateY(180deg);
+          -moz-transform: translate3d(0, 0, 0.1px) scale(0.7) rotateY(180deg);
+          -ms-transform: translate3d(0, 0, 0.1px) scale(0.7) rotateY(180deg);
+          transform: translate3d(0, 0, 0.1px) scale(0.7) rotateY(180deg);
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        .visa-card.flipped {
+          -webkit-transform: translate3d(0, 0, 0.1px) scale(0.7) rotateY(180deg);
+          -moz-transform: translate3d(0, 0, 0.1px) scale(0.7) rotateY(180deg);
+          -ms-transform: translate3d(0, 0, 0.1px) scale(0.7) rotateY(180deg);
+          transform: translate3d(0, 0, 0.1px) scale(0.7) rotateY(180deg);
+        }
+      }
+
+      @media screen and (max-width: 400px) {
+        .visa-card.flipped {
+          -webkit-transform: translate3d(0, 0, 0.1px) scale(0.6) rotateY(180deg);
+          -moz-transform: translate3d(0, 0, 0.1px) scale(0.6) rotateY(180deg);
+          -ms-transform: translate3d(0, 0, 0.1px) scale(0.6) rotateY(180deg);
+          transform: translate3d(0, 0, 0.1px) scale(0.6) rotateY(180deg);
+        }
       }
 
       @media screen and (-webkit-min-device-pixel-ratio: 1) {
