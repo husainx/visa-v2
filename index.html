@@ -14,7 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
       :root {
-        --bg: #111316;
+        --bg: #fbfcff;
         --pattern-png: url(assets/images/pattern_tile.png);
         --airport: url(assets/images/airport_01.png);
         --airport-mask: url(assets/images/airport_mask.png);
@@ -311,12 +311,12 @@
           #072149 20%,
           transparent 40%
         );
-        background-image: radial-gradient(
+        /* background-image: radial-gradient(
           circle at 20% 25%,
-          #0c1c63 2%,
+          #090f28 2%,
           #072149 20%,
           transparent 40%
-        );
+        ); */
 
         /* background-size: 100% 220vh; */
         background-position: center;
@@ -1277,7 +1277,7 @@
       holoLoop
         .to("#app", {
           "--h": "85%",
-          "--o": 0.9,
+          "--o": 1,
           "--r-clr-1": "#a67739",
           "--r-clr-2": "#659c35",
           "--r-clr-3": "#359c9c",
@@ -1398,12 +1398,13 @@
         .fromTo(
           "#app",
           {
-            "--c-gradient-pos": "15% -140%",
+            "--c-gradient-pos": "15% -30%",
           },
           {
             "--c-gradient-pos": "75% 180%",
             duration: 32,
             ease: "power1.inOut",
+            immediateRender: true,
           }
         )
         .to("#app", {
@@ -1422,7 +1423,12 @@
           ease: "power1.inOut",
         });
 
-      const holoAirportLoop = gsap.timeline({ repeat: -1, repeatDelay: 0 });
+      const holoAirportLoop = gsap.timeline({
+        repeat: -1,
+        repeatDelay: 0,
+        immediateRender: true,
+      });
+
       holoAirportLoop
         .fromTo(
           "#app",
