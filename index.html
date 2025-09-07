@@ -486,17 +486,29 @@
         -webkit-background-clip: padding-box;
         background-clip: padding-box;
       }
-
-      .logo {
-        width: 60%;
-        place-self: center;
+      .logo-container {
+        display: flex;
+        padding: 1rem;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
         position: absolute;
+      }
+      .immg-logo {
+        width: 18%;
+        place-self: center;
+        /* position: absolute; */
         top: 1rem;
         left: 50%;
-        -webkit-transform: translateX(-50%);
-        -moz-transform: translateX(-50%);
-        -ms-transform: translateX(-50%);
-        transform: translateX(-50%);
+      }
+
+      .logo {
+        width: 40%;
+        place-self: center;
+        /* position: absolute; */
+        top: 1rem;
+        left: 50%;
+
         -webkit-filter: brightness(0) invert(1);
         filter: brightness(0) invert(1);
         z-index: 60;
@@ -1084,7 +1096,15 @@
           <div class="airport-overlay overlay-base"></div>
           <div class="holo holo-base"></div>
           <div class="pattern-overlay overlay-base"></div>
-          <img class="logo" src="assets/svgs/logo.svg" alt="VISA logo" />
+          <div class="logo-container">
+            <img class="logo" src="assets/svgs/logo.svg" alt="VISA logo" />
+
+            <img
+              class="immg-logo"
+              src="assets/svgs/immigration_logo.svg"
+              alt="immigration logo"
+            />
+          </div>
 
           <div id="content">
             <div class="photo-name-section">

@@ -1,0 +1,29 @@
+<!-- <?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 608.85 639.77" style="enable-background:new 0 0 608.85 639.77;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#FFFFFF;stroke-width:3;stroke-miterlimit:10;}
+	.flag-fabric{fill:none;stroke:#FFFFFF;stroke-width:3;stroke-miterlimit:10;}
+	.flag-green{fill:none;stroke:#FFFFFF;stroke-width:3;stroke-miterlimit:10;}
+	.flag-white{fill:none;stroke:#FFFFFF;stroke-width:3;stroke-miterlimit:10;}
+</style>
+<defs>
+	<clipPath id="flagMask">
+		<rect x="27.28" y="50.14" width="581.07" height="363.98"/>
+	</clipPath>
+</defs>
+<g clip-path="url(#flagMask)">
+	<!-- Animated waving fabric background -->
+	<path class="flag-fabric" d="M27.28 50.14c58 0 73-7 116-7 22 0 50 7 82 7 58 0 73-7 116-7 22 0 50 7 82 7 58 0 73-7 116-7 22 0 50 7 82 7v363.98c-58 0-73 7-116 7-22 0-50-7-82-7-58 0-73 7-116 7-22 0-50-7-82-7-58 0-73 7-116 7-22 0-50-7-82-7V50.14z"/>
+
+	<!-- Green rectangle -->
+	<rect x="125.56" y="134.02" class="flag-green" width="384.52" height="196.24"/>
+
+	<!-- White crescent moon -->
+	<g class="flag-white">
+		<path d="M353.17,284.17c-5.12,1.59-10.57,2.45-16.22,2.45c-30.09,0-54.49-24.4-54.49-54.49
+			c0-30.09,24.4-54.48,54.49-54.48c5.65,0,11.1,0.86,16.22,2.45"/>
+		<path d="M353.17,284.17c-22.17-6.91-38.27-27.59-38.27-52.04s16.1-45.12,38.27-52.03"/>
+	</g>
+</g>
+</svg> -->
