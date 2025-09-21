@@ -279,7 +279,7 @@
         -ms-grid-column: 1;
         grid-area: 1/1;
         width: 400px;
-        height: 800px;
+        height: 830px;
         aspect-ratio: 0.5;
         -webkit-transform: translate3d(0, 0, 0.1px) scale(1) rotateY(0deg);
         -moz-transform: translate3d(0, 0, 0.1px) scale(1) rotateY(0deg);
@@ -476,7 +476,7 @@
         mask-position: 0%, var(--c-gradient-pos);
         -webkit-mask-composite: source-in;
         mask-composite: intersect;
-        mix-blend-mode: screen;
+        mix-blend-mode: plus-lighter;
         -webkit-filter: brightness(0.9) contrast(0.7) saturate(2);
         filter: brightness(0.9) contrast(0.7) saturate(2);
         z-index: 20;
@@ -509,9 +509,9 @@
         /* position: absolute; */
         top: 1rem;
         left: 50%;
-
+        /*
         -webkit-filter: brightness(0) invert(1);
-        filter: brightness(0) invert(1);
+        filter: brightness(0) invert(1); */
         z-index: 60;
       }
 
@@ -1098,11 +1098,11 @@
           <div class="holo holo-base"></div>
           <div class="pattern-overlay overlay-base"></div>
           <div class="logo-container">
-            <img class="logo" src="assets/svgs/logo.svg" alt="VISA logo" />
+            <img class="logo" src="assets/svgs/evisa.svg" alt="VISA logo" />
 
             <img
               class="immg-logo"
-              src="assets/svgs/immigration_logo.svg"
+              src="assets/svgs/emblum.svg"
               alt="immigration logo"
             />
           </div>
