@@ -247,7 +247,7 @@
         bottom: 0;
         left: 0;
         background-image: repeating-linear-gradient(
-            30deg in oklab,
+            calc(30deg + var(--tilt-angle, 0deg)) in oklab,
             hsl(40 100% 50%) 0%,
             hsl(55 100% 50%) 1%,
             hsl(120 100% 50%) 2%,
@@ -264,14 +264,21 @@
           );
         background-blend-mode: multiply;
         background-position: calc(
-              50% + ((var(--x, 50%) / 18) - (var(--y, 50%) / 18))
+              50% + ((var(--x, 50%) / 18) - (var(--y, 50%) / 18)) +
+                var(--tilt-offset-x, 0%)
             )
-            0,
+            calc(0% + var(--tilt-offset-y, 0%)),
           center;
         background-size: calc(100% * 20 * 2), 100%;
         mask-image: url("assets/images/pattern_tile.png");
-        mask-position: calc(50% + ((var(--x, 50%) - 50%) * var(--factor)))
-          calc(50% + ((var(--y, 50%) - 50%) * var(--factor)));
+        mask-position: calc(
+            50% + ((var(--x, 50%) - 50%) * var(--factor)) +
+              var(--tilt-offset-x, 0%)
+          )
+          calc(
+            50% + ((var(--y, 50%) - 50%) * var(--factor)) +
+              var(--tilt-offset-y, 0%)
+          );
         mask-size: 5px;
         mask-repeat: repeat;
         filter: brightness(1.1) contrast(1.25) saturate(2);
@@ -507,22 +514,32 @@
         const aX = x / window.innerWidth;
         const aY = y / window.innerHeight;
 
-        // Calculate rotation based on device orientation
-        // Convert device orientation to card rotation
-        const tiltX = deviceOrientation.beta * 0.1; // Scale down for subtle effect
-        const tiltY = deviceOrientation.gamma * 0.1;
+        // Calculate holographic effect position based on device orientation
+        // Convert device orientation to holographic effect positioning
+        const tiltX = deviceOrientation.beta * 0.3; // Scale for holographic effect
+        const tiltY = deviceOrientation.gamma * 0.3;
 
-        // Combine mouse movement with device tilt
-        const finalRX = -0.1 * aY + tiltX;
-        const finalRY = 0.1 * aX + tiltY;
+        // Combine mouse movement with device tilt for holographic effects
+        const holographicX = pX * 100 + tiltY * 10; // Add device tilt to X position
+        const holographicY = pY * 100 + tiltX * 10; // Add device tilt to Y position
+
+        // Calculate tilt angle for foil gradient rotation
+        const tiltAngle = Math.sqrt(tiltX * tiltX + tiltY * tiltY) * 2;
+
+        // Calculate tilt offsets for enhanced holographic effects
+        const tiltOffsetX = tiltY * 5; // Horizontal offset based on gamma
+        const tiltOffsetY = tiltX * 5; // Vertical offset based on beta
 
         const styles = {
-          "--x": `${pX * 100}%`,
-          "--y": `${pY * 100}%`,
+          "--x": `${holographicX}%`,
+          "--y": `${holographicY}%`,
           "--sx": `${spX * 100}%`,
           "--sy": `${spY * 100}%`,
-          "--rx": `${finalRX}deg`,
-          "--ry": `${finalRY}deg`,
+          "--rx": `0deg`, // Keep card flat
+          "--ry": `0deg`, // Keep card flat
+          "--tilt-angle": `${tiltAngle}deg`, // For foil gradient rotation
+          "--tilt-offset-x": `${tiltOffsetX}%`, // For foil position offset
+          "--tilt-offset-y": `${tiltOffsetY}%`, // For foil position offset
         };
 
         // Apply styles to the card
