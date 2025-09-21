@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Visa Card</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        box-sizing: border-box;
+        height: 100%;
+        -webkit-font-smoothing: antialiased;
+        background-color: #c0c6ce;
+        color: #21262e;
+        font-family: ui-sans-serif, system-ui;
+        overflow: hidden;
+      }
+
+      *,
+      :before,
+      :after {
+        box-sizing: inherit;
+      }
+
+      body {
+        min-height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 1.375;
+        position: relative;
+      }
+
+      .hint {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .stage {
+        perspective: 800px;
+        transform-style: preserve-3d;
+      }
+
+      .card {
+        position: relative;
+        width: 20em;
+        height: 35em;
+        border-radius: 0.75em;
+        background-color: hsl(217, 41%, 15%);
+        color: white;
+        overflow: hidden;
+        margin: auto;
+        transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(2.5);
+        backface-visibility: hidden;
+        will-change: transform;
+      }
+
+      .content {
+        display: flex;
+        flex-direction: column;
+        padding: 1.5em 1em;
+        z-index: 2;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        font-family: "Roboto Mono", monospace;
+      }
+
+      .logo-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1em;
+      }
+
+      .logo {
+        width: 35%;
+        filter: brightness(0) invert(1);
+      }
+
+      .immg-logo {
+        width: 15%;
+      }
+
+      .photo-name-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 0.8em;
+      }
+
+      .photo-container {
+        width: 3em;
+        height: 3.75em;
+        background-color: white;
+        border-radius: 0.25em;
+        border: 2px solid #d1fae5;
+        margin-bottom: 0.5em;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .photo-container:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .photo-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .name {
+        font-size: 0.9em;
+        font-weight: 500;
+        text-align: center;
+        line-height: 1.3;
+        margin: 0;
+      }
+
+      .personal-info {
+        margin-bottom: 1em;
+      }
+
+      .visa-details {
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        padding-top: 1em;
+        margin-bottom: 1.5em;
+      }
+
+      .visa-details .title {
+        font-size: 0.6em;
+        opacity: 0.8;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 0.8em;
+      }
+
+      .grid-2col {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5em;
+        margin-bottom: 0.8em;
+      }
+
+      .grid-1col {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 0.5em;
+        /* margin-bottom: 0.8em; */
+      }
+
+      /* .grid-item {
+        margin-bottom: 0.5em;
+      } */
+
+      .grid-item p {
+        margin: 0;
+      }
+
+      .label {
+        font-size: 0.5em;
+        opacity: 0.8;
+        margin-bottom: 0.2em;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .label p {
+        margin: 0;
+        font-size: 0.5em;
+        opacity: 0.8;
+      }
+
+      .value {
+        font-size: 0.7em;
+        font-weight: 600;
+      }
+
+      .flex {
+        display: flex;
+      }
+
+      .flex-col {
+        flex-direction: column;
+      }
+
+      .text-sm {
+        font-size: 0.5em;
+      }
+
+      .opacity-80 {
+        opacity: 0.8;
+      }
+
+      .font-semibold {
+        font-weight: 600;
+      }
+
+      .qr-button {
+        position: absolute;
+        bottom: 1em;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2em;
+        height: 2em;
+        background-color: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 0.3em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 10;
+      }
+
+      .qr-button:hover {
+        background-color: rgba(255, 255, 255, 1);
+        transform: translateX(-50%) scale(1.1);
+      }
+
+      .qr-icon {
+        width: 1em;
+        height: 1em;
+        fill: #333;
+      }
+
+      .foil {
+        --factor: -0.12;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: repeating-linear-gradient(
+            30deg in oklab,
+            hsl(40 100% 50%) 0%,
+            hsl(55 100% 50%) 1%,
+            hsl(120 100% 50%) 2%,
+            hsl(180 100% 50%) 3%,
+            hsl(300 100% 50%) 4%,
+            hsl(40 100% 50%) 5%
+          ),
+          radial-gradient(
+            farthest-corner circle at var(--x, 50%) var(--y, 50%),
+            hsl(0 0 100%) 0%,
+            hsl(0 0 20%) 20%,
+            hsl(0 0 10%) 50%,
+            hsl(0 0 40%) 300%
+          );
+        background-blend-mode: multiply;
+        background-position: calc(
+              50% + ((var(--x, 50%) / 18) - (var(--y, 50%) / 18))
+            )
+            0,
+          center;
+        background-size: calc(100% * 20 * 2), 100%;
+        mask-image: url("assets/images/pattern_tile.png");
+        mask-position: calc(50% + ((var(--x, 50%) - 50%) * var(--factor)))
+          calc(50% + ((var(--y, 50%) - 50%) * var(--factor)));
+        mask-size: 5px;
+        mask-repeat: repeat;
+        filter: brightness(1.1) contrast(1.25) saturate(2);
+        mix-blend-mode: plus-lighter;
+        will-change: background-image, background-position;
+      }
+
+      .glare {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: radial-gradient(
+          farthest-corner circle at var(--x, 50%) var(--y, 50%),
+          hsl(200 20% 100% / 0.5) 0%,
+          hsl(200 60% 2% / 1) 250%
+        );
+        filter: brightness(1.1) contrast(1.2) saturate(1.5);
+        mix-blend-mode: overlay;
+        will-change: background-image;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .card {
+          width: 16em;
+          height: 31em;
+          scale: 1;
+        }
+
+        .content {
+          padding: 1.2em 0.8em;
+        }
+
+        .name {
+          font-size: 0.8em;
+        }
+
+        .value {
+          font-size: 0.65em;
+        }
+
+        .label {
+          font-size: 0.45em;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .card {
+          width: 14em;
+          height: 31em;
+          scale: 0.6;
+        }
+
+        .content {
+          padding: 1em 0.6em;
+        }
+
+        .name {
+          font-size: 0.75em;
+        }
+
+        .value {
+          font-size: 0.6em;
+        }
+
+        .label {
+          font-size: 0.4em;
+        }
+
+        .photo-container {
+          width: 2.5em;
+          height: 3em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <div class="card" id="card">
+        <div class="content">
+          <div class="logo-container">
+            <img class="logo" src="assets/svgs/logo.svg" alt="VISA logo" />
+            <img
+              class="immg-logo"
+              src="assets/svgs/immigration_logo.svg"
+              alt="immigration logo"
+            />
+          </div>
+
+          <div class="photo-name-section">
+            <div class="photo-container">
+              <img
+                src="https://i.pravatar.cc/150?u=uniqueUserId12"
+                alt="Profile Photo"
+              />
+            </div>
+            <h1 class="name">Muthuswami Venugopal Iyer</h1>
+          </div>
+
+          <div class="personal-info grid-2col">
+            <div class="grid-item">
+              <div class="label flex flex-col text-sm opacity-80">
+                <p class="label text-sm opacity-80">Gender</p>
+                <p class="label text-sm opacity-80">ޖިންސު</p>
+              </div>
+              <p class="value font-semibold">Male</p>
+            </div>
+            <div class="grid-item">
+              <span class="label flex flex-col text-sm opacity-80">
+                <p class="label text-sm opacity-80">Nationality</p>
+                <p class="label text-sm opacity-80">ޤައުމިއްޔަތު</p>
+              </span>
+              <p class="value font-semibold">Indian</p>
+            </div>
+            <div class="grid-item">
+              <div class="label flex flex-col text-sm opacity-80">
+                <p class="label text-sm opacity-80">Date of Birth</p>
+                <p class="label text-sm opacity-80">އުފަންދުވަސް</p>
+              </div>
+              <p class="value font-semibold">17/03/2002</p>
+            </div>
+            <div class="grid-item">
+              <div class="label flex flex-col text-sm opacity-80">
+                <p class="label text-sm opacity-80">Passport No.</p>
+                <p class="label text-sm opacity-80">ޕާސްޕޯޓް ނަންބަރު</p>
+              </div>
+              <p class="value font-semibold">V1251024</p>
+            </div>
+          </div>
+
+          <div class="visa-details">
+            <div class="title">Visa Details</div>
+            <div class="grid-2col">
+              <div class="grid-item">
+                <div class="label flex flex-col text-sm opacity-80">
+                  <p class="label text-sm opacity-80">Visa Type</p>
+                  <p class="label text-sm opacity-80">ވިސާ</p>
+                </div>
+                <p class="value font-semibold">Work Visa</p>
+              </div>
+              <div class="grid-item">
+                <div class="label flex flex-col text-sm opacity-80">
+                  <p class="label text-sm opacity-80">Visa No</p>
+                  <p class="label text-sm opacity-80">ވިސާ ނަންބަރު ރު</p>
+                </div>
+                <p class="value font-semibold">55673/2024</p>
+              </div>
+              <div class="grid-item">
+                <div class="label flex flex-col text-sm opacity-80">
+                  <p class="label text-sm opacity-80">Valid from</p>
+                  <p class="label text-sm opacity-80">އުފަންދުވަސް</p>
+                </div>
+                <p class="value font-semibold">15/12/2024</p>
+              </div>
+              <div class="grid-item">
+                <div class="label flex flex-col text-sm opacity-80">
+                  <p class="label text-sm opacity-80">Valid Until</p>
+                  <p class="label text-sm opacity-80">ފެށޭ ތާރީޚެވެ</p>
+                </div>
+                <p class="value font-semibold">15/12/2026</p>
+              </div>
+              <div class="grid-item">
+                <div class="label flex flex-col text-sm opacity-80">
+                  <p class="label text-sm opacity-80">No. of Entries</p>
+                  <p class="label text-sm opacity-80">އެތެރެވެވުނު އަދަދު</p>
+                </div>
+                <p class="value font-semibold">Multiple</p>
+              </div>
+            </div>
+            <div class="details grid-1col">
+              <div class="grid-item">
+                <div class="label flex flex-col text-sm opacity-80">
+                  <p class="label text-sm opacity-80">Details</p>
+                  <p class="label text-sm opacity-80">ތަފްސީލު</p>
+                </div>
+                <p class="value font-semibold">Abdulla Wisham(A12376)</p>
+              </div>
+            </div>
+          </div>
+
+          <button class="qr-button">
+            <svg
+              class="qr-icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3 11V3H11V11H3ZM5 9H9V5H5V9ZM3 21V13H11V21H3ZM5 19H9V15H5V19ZM13 3V11H21V3H13ZM19 9H15V5H19V9ZM19 21V19H21V21H19ZM19 17V15H21V17H19ZM17 19V21H15V19H17ZM13 13V15H15V13H13ZM13 17V19H15V17H13ZM13 21V19H15V21H13ZM17 13V15H19V13H17Z"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="foil"></div>
+        <div class="glare"></div>
+      </div>
+    </div>
+
+    <script>
+      console.clear();
+
+      let x = 240;
+      let y = 160;
+      let deviceOrientation = { alpha: 0, beta: 0, gamma: 0 };
+      const card = document.getElementById("card");
+
+      function updatePointer(event) {
+        x = event.clientX;
+        y = event.clientY;
+        updateCardStyles();
+      }
+
+      function handleDeviceOrientation(event) {
+        deviceOrientation = {
+          alpha: event.alpha || 0, // rotation around z-axis (0-360)
+          beta: event.beta || 0, // rotation around x-axis (-180 to 180)
+          gamma: event.gamma || 0, // rotation around y-axis (-90 to 90)
+        };
+        updateCardStyles();
+      }
+
+      function updateCardStyles() {
+        if (!card) return;
+
+        const rect = card.getBoundingClientRect();
+        const rX = x - rect.left;
+        const rY = y - rect.top;
+        const pX = rX / rect.width;
+        const pY = rY / rect.height;
+        const spX = Math.min(Math.max(pX, 0), 1);
+        const spY = Math.min(Math.max(pY, 0), 1);
+        const aX = x / window.innerWidth;
+        const aY = y / window.innerHeight;
+
+        // Calculate rotation based on device orientation
+        // Convert device orientation to card rotation
+        const tiltX = deviceOrientation.beta * 0.1; // Scale down for subtle effect
+        const tiltY = deviceOrientation.gamma * 0.1;
+
+        // Combine mouse movement with device tilt
+        const finalRX = -0.1 * aY + tiltX;
+        const finalRY = 0.1 * aX + tiltY;
+
+        const styles = {
+          "--x": `${pX * 100}%`,
+          "--y": `${pY * 100}%`,
+          "--sx": `${spX * 100}%`,
+          "--sy": `${spY * 100}%`,
+          "--rx": `${finalRX}deg`,
+          "--ry": `${finalRY}deg`,
+        };
+
+        // Apply styles to the card
+        Object.entries(styles).forEach(([property, value]) => {
+          card.style.setProperty(property, value);
+        });
+      }
+
+      // Request permission for device orientation (iOS 13+)
+      function requestOrientationPermission() {
+        if (
+          typeof DeviceOrientationEvent !== "undefined" &&
+          typeof DeviceOrientationEvent.requestPermission === "function"
+        ) {
+          DeviceOrientationEvent.requestPermission()
+            .then((response) => {
+              if (response === "granted") {
+                window.addEventListener(
+                  "deviceorientation",
+                  handleDeviceOrientation,
+                  true
+                );
+              }
+            })
+            .catch(console.error);
+        } else {
+          // For other browsers, add listener directly
+          window.addEventListener(
+            "deviceorientation",
+            handleDeviceOrientation,
+            true
+          );
+        }
+      }
+
+      // Add event listeners
+      document.addEventListener("pointermove", updatePointer, true);
+
+      // Request orientation permission on first user interaction
+      document.addEventListener("click", requestOrientationPermission, {
+        once: true,
+      });
+      document.addEventListener("touchstart", requestOrientationPermission, {
+        once: true,
+      });
+
+      // Initialize with default position
+      updateCardStyles();
+    </script>
+  </body>
+</html>
